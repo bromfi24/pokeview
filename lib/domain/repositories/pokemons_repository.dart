@@ -1,6 +1,6 @@
 
 import 'package:pokeview/domain/entities/pokemon.dart';
 
-abstract class PokemonsDatasource {
+abstract class PokemonsRepository {
   Future<List<Pokemon>> getInitialListPokemons();
 }

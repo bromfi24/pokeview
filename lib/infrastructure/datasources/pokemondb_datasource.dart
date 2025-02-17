@@ -18,7 +18,6 @@ class PokemondbDatasource extends PokemonsDatasource {
 
   @override
   Future<List<Pokemon>> getInitialListPokemons() async {
-
     //First we need to get the list of pokemons
     final response = await dio.get(Constants.API_URL_INITIAL_LIST);
     final listResponse = ListPokemonResponse.fromJson(response.data);
@@ -32,7 +31,7 @@ class PokemondbDatasource extends PokemonsDatasource {
       pokemons.add(pokemon);
     }
 
-    return Future.value([]);
+    return Future.value(pokemons);
   }
 
 
