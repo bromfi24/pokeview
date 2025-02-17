@@ -18,17 +18,13 @@ class MainApp extends StatelessWidget {
     final pokemonRepositroy = PokemonRepositoryImp(PokemondbDatasource());
     return  MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => PokemonProvider(pokemonRepositroy)..getInitialListPokemons()),
+        ChangeNotifierProvider(create: (_) => PokemonsProvider(pokemonRepositroy)),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
+        routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          body: Center(
-            child: Text('Hello World!'),
-          ),
-        ),
         theme: AppTheme().getTheme(),
-      ),
+      )
     );
   }
 }
