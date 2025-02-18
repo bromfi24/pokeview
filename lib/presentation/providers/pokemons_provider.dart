@@ -19,7 +19,7 @@ class PokemonsProvider extends ChangeNotifier{
     try {
       pokemons.addAll(await _pokemonsRepository.getPokemonsList(url));
     } catch (e) {
-      print('Error fetching Pokémon list: $e');
+      debugPrint('Error fetching Pokémon list: $e');
     } finally {
       isLoadingMore = false;
       notifyListeners();  
@@ -34,7 +34,7 @@ class PokemonsProvider extends ChangeNotifier{
     try {
       pokemons.addAll(await _pokemonsRepository.getNextPokemonList());
     } catch (e) {
-      print('Error fetching next Pokémon list: $e');
+      debugPrint('Error fetching next Pokémon list: $e');
     } finally {
       isLoadingMore = false;
       notifyListeners();
@@ -49,7 +49,7 @@ class PokemonsProvider extends ChangeNotifier{
     try {
       pokemons.addAll(await _pokemonsRepository.getPreviousPokemonList());
     } catch (e) {
-      print('Error fetching previous Pokémon list: $e');
+      debugPrint('Error fetching previous Pokémon list: $e');
     } finally {
       isLoadingMore = false;
       notifyListeners();
