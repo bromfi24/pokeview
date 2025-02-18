@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pokeview/presentation/screens/main/poke_button.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_text_field.dart';
 
@@ -19,6 +18,7 @@ class SurveyScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            SizedBox(height: 20),
             const Text(
               'PokeView',
                 style: TextStyle(
@@ -27,6 +27,7 @@ class SurveyScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            const SizedBox(height: 60),
             CustomTextField(
               controller: nameController,
               labelText: 'Name and Surname',
@@ -43,8 +44,9 @@ class SurveyScreen extends StatelessWidget {
               labelText: 'Test Date',
               keyboardType: TextInputType.datetime,
             ),
-            const SizedBox(height: 24),
+            const SizedBox(height: 40),
             PokeButton(),
+            const SizedBox(height: 20),
             const Text(
                 'Pulsa la pokeball para continuar',
                 style: TextStyle(
