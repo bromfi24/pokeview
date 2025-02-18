@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokeview/presentation/screens/main/survey_screen.dart';
 
-
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
@@ -15,8 +14,22 @@ class MainScreen extends StatelessWidget {
           // Cierra el teclado cuando se toca cualquier lugar fuera de un campo de texto
           FocusScope.of(context).unfocus();
         },
-        child: SurveyScreen()
-      )
-    );
+          child: Container(
+            width: double.infinity,
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.bottomLeft,
+                end: Alignment.topLeft,
+                colors: [
+                  Colors.red,
+                  Colors.white,
+                ],
+              ),
+            ),
+            child: SurveyScreen(),
+          ),
+        ),
+      );
   }
 }
