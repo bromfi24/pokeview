@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/config/router/app_router.dart';
 import 'package:pokeview/config/theme/app_theme.dart';
 import 'package:pokeview/infrastructure/datasources/pokemondb_datasource.dart';
@@ -18,7 +19,7 @@ class MainApp extends StatelessWidget {
     final pokemonRepositroy = PokemonRepositoryImp(PokemondbDatasource());
     return  MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => PokemonsProvider(pokemonRepositroy)),
+        ChangeNotifierProvider(create: (_) => PokemonsProvider(pokemonRepositroy)..getPokemonsList(Constants.API_URL_INITIAL_LIST)),
       ],
       child: MaterialApp.router(
         routerConfig: appRouter,

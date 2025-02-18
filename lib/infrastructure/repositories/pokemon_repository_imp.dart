@@ -10,8 +10,18 @@ class PokemonRepositoryImp extends PokemonsRepository{
   PokemonRepositoryImp(this._pokemonDatasource);
 
   @override
-  Future<List<Pokemon>> getInitialListPokemons() {
-    return _pokemonDatasource.getInitialListPokemons();
+  Future<List<Pokemon>> getPokemonsList(String url) {
+    return _pokemonDatasource.getPokemonsList(url);
+  }
+
+  @override
+  Future<List<Pokemon>> getNextPokemonList(){
+    return _pokemonDatasource.getNextPokemonList();
+  }
+
+  @override
+  Future<List<Pokemon>> getPreviousPokemonList(){
+    return _pokemonDatasource.getPreviousPokemonList();
   }
 
 }
