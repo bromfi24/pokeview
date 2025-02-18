@@ -11,9 +11,9 @@ final appRouter = GoRouter(
       builder: (context, state) => const MainScreen(),
       routes: [
         GoRoute(
-          path: 'list/',
+          path: 'list',
           name: ListScreen.routeName,
-          builder: (context, state) => const ListScreen()
+          builder: (context, state) => const ListScreen(),
         ),
       ]
     ),
