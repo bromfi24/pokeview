@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokeview/presentation/screens/main/survey_screen.dart';
 
 
 class MainScreen extends StatelessWidget {
@@ -10,11 +11,17 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Main Screen'),
+      centerTitle: true,  
+      title: Text(
+        'PokeView',
+        style: TextStyle(
+          fontSize: 50,  
+          fontFamily: 'Pokemon Solid',  
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      body: Text(
-        'Main Screen',
-      ),
+    ),
+    body: SurveyScreen()
     );
   }
 }
