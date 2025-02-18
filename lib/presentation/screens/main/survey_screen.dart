@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_text_field.dart';
 
 
@@ -38,7 +39,7 @@ class SurveyScreen extends StatelessWidget {
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/main-screen');
+                  context.push('/list');
                 },
                 child: const Text('Go to Pokemon List'),
               ),
