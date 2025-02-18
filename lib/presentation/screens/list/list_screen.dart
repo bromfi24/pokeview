@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 
 class ListScreen extends StatelessWidget {
+
+  static const routeName = 'list-screen';
   const ListScreen({super.key});
+
 
   @override
   Widget build(BuildContext context) {

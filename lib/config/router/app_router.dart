@@ -10,7 +10,11 @@ final appRouter = GoRouter(
       name: MainScreen.routeName,
       builder: (context, state) => const MainScreen(),
       routes: [
-         //Todo: Añadir las demás rutas
+        GoRoute(
+          path: 'list/',
+          name: ListScreen.routeName,
+          builder: (context, state) => const ListScreen()
+        ),
       ]
     ),
   ]
