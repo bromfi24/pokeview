@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/presentation/providers/pokemons_provider.dart';
-import 'package:pokeview/presentation/screens/list/pokemon_view.dart';
+import 'package:pokeview/presentation/screens/widgets/views/pokemon_view.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:animate_do/animate_do.dart';

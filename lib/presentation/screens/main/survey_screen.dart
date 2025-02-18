@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokeview/presentation/screens/main/poke_button.dart';
+import 'package:pokeview/presentation/screens/widgets/buttons/poke_button.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_text_field.dart';
 
 
