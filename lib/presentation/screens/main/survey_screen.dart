@@ -18,6 +18,14 @@ class SurveyScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            const Text(
+              'PokeView',
+                style: TextStyle(
+                fontSize: 85,  
+                fontFamily: 'PokemonFont',  
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             CustomTextField(
               controller: nameController,
               labelText: 'Name and Surname',
