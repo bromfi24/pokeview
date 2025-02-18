@@ -19,7 +19,12 @@ class CustomTextField extends StatelessWidget {
       keyboardType: keyboardType,
       decoration: InputDecoration(
         labelText: labelText,
-        border: const OutlineInputBorder(),
+        border:  OutlineInputBorder(
+          borderSide: BorderSide(
+            color: Colors.black,
+          ),
+          borderRadius: BorderRadius.circular(10)
+        ),
       ),
       
     );

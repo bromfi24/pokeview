@@ -10,7 +10,13 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SurveyScreen()
+      body: GestureDetector(
+        onTap: () {
+          // Cierra el teclado cuando se toca cualquier lugar fuera de un campo de texto
+          FocusScope.of(context).unfocus();
+        },
+        child: SurveyScreen()
+      )
     );
   }
 }
