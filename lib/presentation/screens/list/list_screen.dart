@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/presentation/providers/pokemons_provider.dart';
+import 'package:pokeview/presentation/screens/widgets/shared/background_gradient.dart';
 import 'package:pokeview/presentation/screens/widgets/views/pokemon_view.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -63,7 +65,12 @@ class _ListScreenState extends State<ListScreen> {
     final discoverProvider = context.watch<PokemonsProvider>();
     return Scaffold(
       appBar: CustomAppBar(title: "Hazte con todos!"),
-      body: PokemonVisualizer(discoverProvider: discoverProvider, scrollController: _scrollController ),
+      body: BackgroundGradient(
+        colorsList: Constants.colorsListScreen, 
+        child: PokemonVisualizer(
+          discoverProvider: discoverProvider, 
+          scrollController: _scrollController )
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: ()=> context.pop(),
         // child: const Icon(Icons.arrow_back_ios_new_outlined),
