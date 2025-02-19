@@ -12,6 +12,8 @@ import 'package:pokeview/infrastructure/model/pokemon_response.dart';
 
 class PokemondbDatasource extends PokemonsDatasource {
 
+  //TODO: Controlar caso en el que se next o previous sean null
+
   static String next = '';
   static String previous = '';
 

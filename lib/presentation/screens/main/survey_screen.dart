@@ -20,6 +20,8 @@ class SurveyScreen extends StatefulWidget {
   State<SurveyScreen> createState() => _SurveyUserState();
 }
 
+//TODO: Añadir comprobación mounted para evitar setState en un widget no montado
+
 class _SurveyUserState extends State<SurveyScreen> {
 
   bool isCompleted = false;
@@ -49,28 +51,32 @@ class _SurveyUserState extends State<SurveyScreen> {
   }
 
   void clearFields() {
-    widget.nameController.clear();
-    widget.emailController.clear();
-    widget.dateController.clear();
+    setState(() {
+      widget.nameController.clear();
+      widget.emailController.clear();
+      widget.dateController.clear();
+      isCompleted = false;
+    });
   }
 
-  void showValidationError() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text("Error"),
-          content: const Text("Por favor, completa todos los campos antes de continuar."),
-          actions: [
-            TextButton(
-              onPressed: () => context.pop(),
-              child: const Text("OK"),
-            ),
-          ],
-        );
-      },
-    );
-  }
+  //TODO: Implementar validación de campos
+  // void showValidationError() {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: const Text("Error"),
+  //         content: const Text("Por favor, completa todos los campos antes de continuar."),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => context.pop(),
+  //             child: const Text("OK"),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

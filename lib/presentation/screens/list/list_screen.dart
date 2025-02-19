@@ -96,6 +96,7 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
   @override
   Widget build(BuildContext context) { 
     return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0),
       controller: widget.scrollController, 
       scrollDirection: Axis.vertical,
       itemCount: widget.discoverProvider.pokemons.length,
