@@ -21,7 +21,7 @@ class CustomTextField extends StatelessWidget {
   }
 }
 
-class FieldDecoration extends StatelessWidget {
+class FieldDecoration extends StatefulWidget {
   const FieldDecoration({
     super.key,
     required this.controller,
@@ -34,12 +34,28 @@ class FieldDecoration extends StatelessWidget {
   final String labelText;
 
   @override
+  State<FieldDecoration> createState() => _FieldDecorationState();
+}
+
+class _FieldDecorationState extends State<FieldDecoration> {
+
+  @override
+  void dispose() {
+    widget.controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return TextField(
-    controller: controller,
-    keyboardType: keyboardType,
+    controller: widget.controller,
+    keyboardType: widget.keyboardType,
+    onChanged: (value) {
+      print("Texto en tiempo real: $value");
+      // Aquí puedes actualizar el estado o hacer cualquier lógica
+    },
     decoration: InputDecoration(
-      labelText: labelText,
+      labelText: widget.labelText,
       labelStyle: const TextStyle(
         color: Colors.black,   // Color del texto del label
         fontSize: 15,      

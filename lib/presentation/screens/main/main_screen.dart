@@ -10,12 +10,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-          child: BackgroundGradient(child: SurveyScreen())
-        ),
-      );
+      body: BackgroundGradient(child: SurveyScreen()),
+    );
   }
 }
