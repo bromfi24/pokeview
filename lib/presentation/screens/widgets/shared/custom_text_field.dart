@@ -12,6 +12,27 @@ class CustomTextField extends StatelessWidget {
     this.keyboardType,
   });
 
+
+  //TODO: Implementar un controlador que capture los datos introducidos
+
+  @override
+  Widget build(BuildContext context) {
+    return FieldDecoration(controller: controller, keyboardType: keyboardType, labelText: labelText);
+  }
+}
+
+class FieldDecoration extends StatelessWidget {
+  const FieldDecoration({
+    super.key,
+    required this.controller,
+    required this.keyboardType,
+    required this.labelText,
+  });
+
+  final TextEditingController controller;
+  final TextInputType? keyboardType;
+  final String labelText;
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -46,6 +67,6 @@ class CustomTextField extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
       ),
     ),
-  );
+      );
   }
 }

@@ -14,6 +14,7 @@ class MainScreen extends StatelessWidget {
           // Cierra el teclado cuando se toca cualquier lugar fuera de un campo de texto
           FocusScope.of(context).unfocus();
         },
+          //TODO: Modularizar esto y sacarlo en una clase aparte
           child: Container(
             width: double.infinity,
             height: double.infinity,
