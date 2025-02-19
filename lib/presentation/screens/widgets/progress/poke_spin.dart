@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 
 class PokeSpin extends StatefulWidget {
-  const PokeSpin({super.key});
+  final double width;
+  final double height;
+  final bool infinite;
+
+  const PokeSpin({super.key,
+    required this.width,
+    required this.height,
+    required this.infinite,
+  });
 
   @override
   PokeSpinState createState() => PokeSpinState();
@@ -15,10 +23,19 @@ class PokeSpinState extends State<PokeSpin> with SingleTickerProviderStateMixin 
   void initState() {
     super.initState();
     // Inicializa el AnimationController con duración de 2 segundos
-    _controller = AnimationController(
-      vsync: this,
-      duration: Duration(seconds: 2),
-    )..repeat(); // Repite la animación infinitamente
+
+
+    if (widget.infinite) {
+      _controller = AnimationController(
+        vsync: this,
+        duration: Duration(seconds: 2),
+      )..repeat(); 
+    } else {
+      _controller = AnimationController(
+        vsync: this,
+        duration: Duration(seconds: 2),
+      );
+    }
 
     // Define la animación de rotación (giro continuo)
     _rotation = Tween<double>(begin: 0.0, end: 6.28) // 6.28 radianes es una vuelta completa
@@ -40,8 +57,8 @@ class PokeSpinState extends State<PokeSpin> with SingleTickerProviderStateMixin 
         turns: _rotation,
         child: Image.asset(
           'assets/images/pokeball.png', // Ruta de la imagen
-          width: 60, // Tamaño de la imagen
-          height: 60, // Tamaño de la imagen
+          width: widget.width, // Tamaño de la imagen
+          height: widget.height, // Tamaño de la imagen
         ),
       ),
     );

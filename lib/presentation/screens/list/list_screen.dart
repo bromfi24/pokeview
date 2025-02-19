@@ -79,7 +79,7 @@ class _ListScreenState extends State<ListScreen> {
             visible: discoverProvider.isLoadingMore,
             child: Align(
               alignment: Alignment.bottomRight,
-              child: PokeSpin()
+              child: PokeSpin(infinite: true, width: 60, height: 60),
             ),
           ),
         ],

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/presentation/screens/widgets/buttons/poke_button.dart';
 import 'package:pokeview/presentation/screens/widgets/intro/intro.dart';
+import 'package:pokeview/presentation/screens/widgets/progress/poke_spin.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_text_field.dart';
 
 
@@ -50,7 +51,7 @@ class _SurveyUserState extends State<SurveyScreen> {
     });
   }
 
-  void clearFields() {
+  void clearFields() async {
     setState(() {
       widget.nameController.clear();
       widget.emailController.clear();
