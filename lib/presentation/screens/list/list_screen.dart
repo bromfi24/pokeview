@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/presentation/providers/pokemons_provider.dart';
+import 'package:pokeview/presentation/screens/widgets/progress/poke_spin.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/background_gradient.dart';
 import 'package:pokeview/presentation/screens/widgets/views/pokemon_view.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_app_bar.dart';
@@ -60,26 +60,29 @@ class _ListScreenState extends State<ListScreen> {
     super.dispose();
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     final discoverProvider = context.watch<PokemonsProvider>();
     return Scaffold(
       appBar: CustomAppBar(title: "Hazte con todos!"),
-      body: BackgroundGradient(
-        colorsList: Constants.colorsListScreen, 
-        child: PokemonVisualizer(
-          discoverProvider: discoverProvider, 
-          scrollController: _scrollController )
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: ()=> context.pop(),
-        // child: const Icon(Icons.arrow_back_ios_new_outlined),
-        child: discoverProvider.isLoadingMore 
-          ? SpinPerfect(
-              infinite: true,
-              child: const Icon(Icons.refresh_rounded)
-            )
-          : FadeIn(child: const Icon(Icons.arrow_back_ios_new_outlined)),
+      body: Stack(
+        children: [
+          BackgroundGradient(
+            colorsList: Constants.colorsListScreen,
+            child: PokemonVisualizer(
+              discoverProvider: discoverProvider,
+              scrollController: _scrollController,
+            ),
+          ),
+          // El indicador flotante de carga aparece solo si `isLoadingMore` es true
+          Visibility(
+            visible: discoverProvider.isLoadingMore,
+            child: Align(
+              alignment: Alignment.bottomRight,
+              child: PokeSpin()
+            ),
+          ),
+        ],
       ),
     );
   }
