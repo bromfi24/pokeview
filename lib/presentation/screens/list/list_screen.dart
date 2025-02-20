@@ -3,6 +3,7 @@ import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/presentation/providers/pokemons_provider.dart';
 import 'package:pokeview/presentation/screens/widgets/progress/poke_spin.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/background_gradient.dart';
+import 'package:pokeview/presentation/screens/widgets/shared/search_app_bar.dart';
 import 'package:pokeview/presentation/screens/widgets/views/pokemon_view.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,7 @@ class _ListScreenState extends State<ListScreen> {
 
   late ScrollController _scrollController;
   bool isMounted = false;
+  bool searchPressed = false;
 
   @override
   void initState() {
@@ -63,7 +65,20 @@ class _ListScreenState extends State<ListScreen> {
   Widget build(BuildContext context) {
     final discoverProvider = context.watch<PokemonsProvider>();
     return Scaffold(
-      appBar: CustomAppBar(title: "Hazte con todos!"),
+      appBar: SearchCustomAppBar(
+        title: "Hazte con todos!",
+        onPressed: (){
+          setState(() {
+            searchPressed = true;
+          });
+        }, 
+        searchPressed: searchPressed,
+        callBack: (){
+          setState(() {
+            searchPressed = false;
+          });
+        },
+      ),
       body: Stack(
         children: [
           BackgroundGradient(
