@@ -12,7 +12,7 @@ class SurveyScreen extends StatefulWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
 
-   SurveyScreen({
+  SurveyScreen({
     super.key,
   });
 
@@ -34,6 +34,7 @@ class _SurveyUserState extends State<SurveyScreen> {
     widget.emailController.addListener(validateForm);
     widget.dateController.addListener(validateForm);
   }
+  
 
   @override
   void dispose() {
@@ -60,27 +61,9 @@ class _SurveyUserState extends State<SurveyScreen> {
       widget.emailController.clear();
       widget.dateController.clear();
       isCompleted = false;
+      FocusScope.of(context).unfocus();
     });
   }
-
-  //TODO: Implementar validación de campos
-  // void showValidationError() {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: const Text("Error"),
-  //         content: const Text("Por favor, completa todos los campos antes de continuar."),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () => context.pop(),
-  //             child: const Text("OK"),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +108,7 @@ class _SurveyUserState extends State<SurveyScreen> {
                 Column(
                   children: [
                     PokeButton(
-                      onTap: () {
+                      onTap: ()  {
                         clearFields();
                         context.push('/list');
                       },

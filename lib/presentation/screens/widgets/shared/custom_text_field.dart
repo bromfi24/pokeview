@@ -40,20 +40,11 @@ class FieldDecoration extends StatefulWidget {
 class _FieldDecorationState extends State<FieldDecoration> {
 
   @override
-  void dispose() {
-    widget.controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return TextField(
     controller: widget.controller,
     keyboardType: widget.keyboardType,
-    onChanged: (value) {
-      print("Texto en tiempo real: $value");
-      // Aquí puedes actualizar el estado o hacer cualquier lógica
-    },
+    autofocus: false,
     decoration: InputDecoration(
       labelText: widget.labelText,
       labelStyle: const TextStyle(
