@@ -36,5 +36,9 @@ class Constants {
     Colors.blue,
     Colors.white
   ];
+  static List<Color> colorsDetailScreen = [
+    Colors.blue,
+    Colors.white
+  ];
   
 }
