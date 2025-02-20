@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/presentation/screens/widgets/buttons/poke_button.dart';
 import 'package:pokeview/presentation/screens/widgets/intro/intro.dart';
-import 'package:pokeview/presentation/screens/widgets/progress/poke_spin.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_text_field.dart';
 
 
@@ -26,6 +25,7 @@ class SurveyScreen extends StatefulWidget {
 class _SurveyUserState extends State<SurveyScreen> {
 
   bool isCompleted = false;
+  bool isMounted = true;
 
   @override
   void initState() {
@@ -40,10 +40,12 @@ class _SurveyUserState extends State<SurveyScreen> {
     widget.nameController.dispose();
     widget.emailController.dispose();
     widget.dateController.dispose();
+    isMounted = false;
     super.dispose();
   }
 
   void validateForm() {
+    if( !isMounted ) return;
     setState(() {
       isCompleted = widget.nameController.text.isNotEmpty &&
       widget.emailController.text.isNotEmpty &&
@@ -52,6 +54,7 @@ class _SurveyUserState extends State<SurveyScreen> {
   }
 
   void clearFields() async {
+    if( !isMounted ) return;
     setState(() {
       widget.nameController.clear();
       widget.emailController.clear();

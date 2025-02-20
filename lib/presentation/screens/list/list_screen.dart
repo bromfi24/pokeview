@@ -6,7 +6,6 @@ import 'package:pokeview/presentation/screens/widgets/shared/background_gradient
 import 'package:pokeview/presentation/screens/widgets/views/pokemon_view.dart';
 import 'package:pokeview/presentation/screens/widgets/shared/custom_app_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:animate_do/animate_do.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
