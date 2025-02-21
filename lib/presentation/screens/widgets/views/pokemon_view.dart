@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/config/styles/shadowed_image.dart';
 
 class PokemonView extends StatelessWidget {
   final Pokemon pokemon;
@@ -32,20 +33,17 @@ class PokemonView extends StatelessWidget {
           ],
         ),
         child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(8.0),
-              child: Image.network(
-                pokemon.imagesUrl[0],
-                width: 100, // Tamaño más grande de la imagen
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ),
-            const SizedBox(width: 16), // Espaciado entre imagen y texto
+          children: [// Espaciado entre imagen y texto
             Expanded(
               child: PokemonInfo(pokemon: pokemon),
             ),
+            ShadowedImage(
+              imageUrl: pokemon.imagesUrl[0], 
+              width: 100, 
+              height: 100, 
+              shadowColor: Constants.typeColors[pokemon.types[0]] ?? Colors.white // Color por defecto,
+            ),
+            const SizedBox(width: 16), 
           ],
         ),
       ),
@@ -66,37 +64,58 @@ class PokemonInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          pokemon.name,
-          style: const TextStyle(
-            fontSize: 40,
-            fontWeight: FontWeight.bold,
-            fontFamily: "8bits",
-          ),
-        ),
-        Row(
-          children: pokemon.types.map((type) {
-            // Construir la ruta de la imagen para cada tipo
-            String imagePath = '${Constants.ROUTE_ASSETS_TYPE}$type.png';
-            return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Image.asset(
-                imagePath,
-                width: 50, // Ajusta el tamaño de las imágenes
-                height: 50, // Ajusta el tamaño de las imágenes
+        Column(
+          children: [
+            Image.asset(
+              'assets/images/pokeball.png',
+              width: 20,
+              height: 20,
+            ),
+            Text(
+              pokemon.id.toString(),
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: "8bits",
               ),
-            );
-          }).toList(),
+            ),
+          ],
         ),
-        Text(
-          pokemon.id.toString(),
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            fontFamily: "8bits",
+        Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min, // Para que la columna solo ocupe lo necesario
+            crossAxisAlignment: CrossAxisAlignment.center, // Centra el contenido
+            children: [
+              Text(
+                pokemon.name,
+                textAlign: TextAlign.center, // Centra el texto
+                style: const TextStyle(
+                  fontSize: 40,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: "8bits",
+                ),
+              ),
+              const SizedBox(height: 8), // Espacio entre el nombre y los tipos
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center, // Centra los tipos
+                children: pokemon.types.map((type) {
+                  // Construir la ruta de la imagen para cada tipo
+                  String imagePath = '${Constants.ROUTE_ASSETS_TYPE}$type.png';
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Image.asset(
+                      imagePath,
+                      width: 50, // Ajusta el tamaño de las imágenes
+                      height: 50, // Ajusta el tamaño de las imágenes
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
           ),
         ),
       ],
     );
   }
+
 }
