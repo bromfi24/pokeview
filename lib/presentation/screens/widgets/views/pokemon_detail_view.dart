@@ -85,7 +85,6 @@ Widget build(BuildContext context) {
               fontFamily: "8bits",
             ),
           ),
-
           // TIPOS DE POKÉMON
           const SizedBox(height: 10),
           Row(

@@ -61,6 +61,7 @@ class PokemonInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(pokemon.name);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

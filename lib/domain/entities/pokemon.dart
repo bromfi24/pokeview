@@ -9,7 +9,8 @@ class Pokemon {
   final double weight;
   final double baseXP;
   final List<String> types;
-  final List<Moves> moves;
+  final List<Moves> ?moves;
+  final List<String> urlMoves;
 
   Pokemon({
     required this.id,
@@ -19,6 +20,7 @@ class Pokemon {
     required this.weight,
     required this.types,
     required this.baseXP,
-    required this.moves,
+    this.moves,
+    required this.urlMoves,
   });
 }

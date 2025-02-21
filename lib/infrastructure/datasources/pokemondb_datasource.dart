@@ -19,6 +19,8 @@ class PokemondbDatasource extends PokemonsDatasource {
   static String next = '';
   static String previous = '';
 
+  List<Pokemon> pokemons = [];
+
   final dio = Dio(BaseOptions(
     baseUrl: Constants.API_URL_INITIAL_LIST,
   ));
@@ -33,7 +35,6 @@ class PokemondbDatasource extends PokemonsDatasource {
     previous = listResponse.previous ?? '';
 
     //Then we need to get the details of each pokemon
-    List<Pokemon> pokemons = [];
     Pokemon pokemon;
 
     for (var result in listResponse.results) {
@@ -60,17 +61,35 @@ class PokemondbDatasource extends PokemonsDatasource {
     final pokemonResponse = PokemonResponse.fromJson(response.data);
 
     //Get the moves of the pokemon
-    final moves = pokemonResponse.moves;
-    List<Moves> movesResult = [];
+    //final moves = pokemonResponse.moves;
+    //List<Moves> movesResult = [];
 
-    for (var move in moves) {
-      await dio.get(move.url).then((response) {
-        final moveResponse = PokemonMovesResponse.fromJson(response.data);
-        movesResult.add(Moves(name: move.name, type: moveResponse.type));
-      });
-    }
+    // for (var move in moves.take(4)) {
+    //   await dio.get(move.url).then((response) {
+    //     final moveResponse = PokemonMovesResponse.fromJson(response.data);
+    //     movesResult.add(Moves(name: move.name, type: moveResponse.type));
+    //     print('Moves: ${moveResponse.type}');
+    //   });
+    // }
 
-    Pokemon resul = PokemonMapper.pokemonDBToEntity(pokemonResponse, movesResult);
+    Pokemon resul = PokemonMapper.pokemonDBToEntity(pokemonResponse);
     return Future.value(resul);
   }
-}
+
+  Future<void> getPokemonMoves(String urlMove, String moveName) async {
+  // Primero, obtenemos la URL del Pokémon
+  final pokemon = pokemons.firstWhere((pokemon) => pokemon.name == moveName);
+    // Si encontramos el Pokémon, procedemos a obtener sus movimientos
+    List<Moves> movesResult = [];
+
+    await dio.get(urlMove).then((response) {
+      final moveResponse = PokemonMovesResponse.fromJson(response.data);
+      movesResult.add(Moves(name: moveName, type: moveResponse.type));
+      print('Moves: ${moveResponse.type}');
+    });
+
+    // Ahora añadimos los movimientos obtenidos al Pokémon encontrado
+    pokemon.moves?.addAll(movesResult);
+    
+    }
+  }
