@@ -149,7 +149,7 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
   
   @override
   Widget build(BuildContext context) {
-    //TODO: Preguntar dudas
+    //TODO: Revision de la lista de pokemons
     filteredPokemon = widget.query.isEmpty
         ? totalPokemon
         : totalPokemon.where((pokemon) => 

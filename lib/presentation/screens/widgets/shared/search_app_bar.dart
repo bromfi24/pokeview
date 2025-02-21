@@ -37,6 +37,11 @@ class SearchCustomAppBar extends StatelessWidget implements PreferredSizeWidget 
             fontFamily: "8bits",
           ),
         ),
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 30,
+          fontFamily: "8bits",
+        ),
       ) 
       :
       Text(
