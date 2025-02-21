@@ -64,13 +64,22 @@ class PokemonInfo extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          pokemon.id.toString(),
-          style: const TextStyle(
-            fontSize: 30,
-            fontWeight: FontWeight.bold,
-            fontFamily: "8bits",
-          ),
+        Column(
+          children: [
+            Image.asset(
+              'assets/images/pokeball.png',
+              width: 20,
+              height: 20,
+            ),
+            Text(
+              pokemon.id.toString(),
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: "8bits",
+              ),
+            ),
+          ],
         ),
         Expanded(
           child: Column(
