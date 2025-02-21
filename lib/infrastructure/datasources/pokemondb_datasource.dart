@@ -2,12 +2,14 @@
 
 import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/domain/datasources/pokemons_datasource.dart';
+import 'package:pokeview/domain/entities/moves.dart';
 import 'package:pokeview/domain/entities/pokemon.dart';
 
 import 'package:dio/dio.dart';
 import 'package:pokeview/infrastructure/mappers/pokemon_mapper.dart';
 import 'package:pokeview/infrastructure/model/list_pokemon_response.dart';
 import 'package:pokeview/infrastructure/model/pokemon_response.dart';
+import 'package:pokeview/infrastructure/model/pokemon_response_moves.dart';
 
 
 class PokemondbDatasource extends PokemonsDatasource {
@@ -56,7 +58,19 @@ class PokemondbDatasource extends PokemonsDatasource {
     //Get the details of the pokemon
     final response = await dio.get(url);
     final pokemonResponse = PokemonResponse.fromJson(response.data);
-    Pokemon resul = PokemonMapper.pokemonDBToEntity(pokemonResponse);
+
+    //Get the moves of the pokemon
+    final moves = pokemonResponse.moves;
+    List<Moves> movesResult = [];
+
+    for (var move in moves) {
+      await dio.get(move.url).then((response) {
+        final moveResponse = PokemonMovesResponse.fromJson(response.data);
+        movesResult.add(Moves(name: move.name, type: moveResponse.type));
+      });
+    }
+
+    Pokemon resul = PokemonMapper.pokemonDBToEntity(pokemonResponse, movesResult);
     return Future.value(resul);
   }
 }

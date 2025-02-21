@@ -1,3 +1,10 @@
+class MovesApi{
+  final String name;
+  final String url;
+
+  MovesApi({required this.name, required this.url});
+}
+
 class PokemonResponse {
   final int id;
   final String name;
@@ -6,6 +13,7 @@ class PokemonResponse {
   final double weight;
   final double baseXP;
   final List<String> types;
+  final List<MovesApi> moves;
 
   PokemonResponse({
     required this.id,
@@ -15,6 +23,7 @@ class PokemonResponse {
     required this.weight,
     required this.types,
     required this.baseXP,
+    required this.moves,
   });
 
   factory PokemonResponse.fromJson(Map<String, dynamic> json) {
@@ -33,6 +42,18 @@ class PokemonResponse {
       types: (json['types'] as List)
           .map((typeInfo) => typeInfo['type']['name'] as String)
           .toList(),
+      moves: (json['moves'] as List)
+          .map((moveInfo) {
+            // Aquí creamos un objeto MovesApi con nombre y URL
+            final move = moveInfo['move'];
+            return MovesApi(
+              name: move['name'],
+              url: move['url'],
+            );
+          })
+          .toList(),
     );
   }
 }
+
+
