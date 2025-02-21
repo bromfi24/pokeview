@@ -29,7 +29,7 @@ class SearchCustomAppBar extends StatelessWidget implements PreferredSizeWidget 
           callBackSearch!(value);
         },
         decoration: const InputDecoration(
-          hintText: "Buscar...",
+          hintText: "Busca tu pokemon...",
           border: InputBorder.none,
           hintStyle: TextStyle(
             color: Colors.black,
