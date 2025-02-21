@@ -12,17 +12,19 @@ class PokemonDetailView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        width: 400,
-        height: 700,
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          border: Border.all(color: Colors.black, width: 3.0),
-          borderRadius: BorderRadius.circular(12.0),
+    return SingleChildScrollView(
+      child: Center(
+        child: Container(
+          width: 400,
+          height: 700,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border.all(color: Colors.black, width: 3.0),
+            borderRadius: BorderRadius.circular(12.0),
+          ),
+          child: PokemonDetailInfo(pokemon: pokemon),
         ),
-        child: PokemonDetailInfo(pokemon: pokemon),
       ),
     );
   }
