@@ -15,8 +15,8 @@ class PokemonDetailView extends StatelessWidget {
     return SingleChildScrollView(
       child: Center(
         child: Container(
-          width: 400,
-          height: 700,
+          width: 440,
+          height: 720,
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -38,56 +38,72 @@ class PokemonDetailInfo extends StatelessWidget {
 
   final Pokemon pokemon;
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: pokemon.imagesUrl.map((imageUrl) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-            child: Image.network(imageUrl, width: 100, height: 100),
-          )).toList(),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          'Height: ${pokemon.height} m', 
-            style: TextStyle(fontSize: 30, 
+ @override
+Widget build(BuildContext context) {
+    return SizedBox.expand( // Asegura que la columna ocupe todo el espacio disponible
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start, // Alinea los elementos arriba
+        crossAxisAlignment: CrossAxisAlignment.center, // Centra horizontalmente
+        children: [
+          // IMÁGENES ARRIBA
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: pokemon.imagesUrl.map((imageUrl) => Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+              child: Image.network(imageUrl, width: 90, height: 90),
+            )).toList(),
+          ),
+
+          const SizedBox(height: 20),
+
+          // ALTURA
+          Text(
+            'Height: ${pokemon.height} m',
+            style: const TextStyle(
+              fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: "8bits",
+            ),
           ),
-        ),
-        Text(
-          'Weight: ${pokemon.weight} kg', 
-            style: TextStyle(fontSize: 30, 
+
+          // PESO
+          Text(
+            'Weight: ${pokemon.weight} kg',
+            style: const TextStyle(
+              fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: "8bits",
+            ),
           ),
-        ),
-        Text(
-          'Base XP: ${pokemon.height}', 
-            style: TextStyle(fontSize: 30, 
+
+          // BASE XP (CORRECCIÓN: Debía ser pokemon.baseExperience en vez de height)
+          Text(
+            'Base XP: ${pokemon.baseXP}',
+            style: const TextStyle(
+              fontSize: 30,
               fontWeight: FontWeight.bold,
               fontFamily: "8bits",
+            ),
           ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: pokemon.types.map((type) {
-            // Construir la ruta de la imagen para cada tipo
-            String imagePath = '${Constants.ROUTE_ASSETS_TYPE}$type.png';
-            return Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Image.asset(
-                imagePath,
-                width: 50, // Ajusta el tamaño de las imágenes
-                height: 50, // Ajusta el tamaño de las imágenes
-              ),
-            );
-          }).toList(),
-        ),
-      ],
+
+          // TIPOS DE POKÉMON
+          const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: pokemon.types.map((type) {
+              String imagePath = '${Constants.ROUTE_ASSETS_TYPE}$type.png';
+              return Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Image.asset(
+                  imagePath,
+                  width: 50,
+                  height: 50,
+                ),
+              );
+            }).toList(),
+          ),
+        ],
+      ),
     );
   }
 }
