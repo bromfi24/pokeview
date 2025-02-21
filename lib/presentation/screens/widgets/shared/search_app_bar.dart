@@ -5,11 +5,16 @@ class SearchCustomAppBar extends StatelessWidget implements PreferredSizeWidget 
   final String title;
   final void Function()? onPressed;
   final bool searchPressed;
-  final Function()? callBack;
+  final Function()? callBackButton;
+  final Function(String query)? callBackSearch;
 
   const SearchCustomAppBar({
     super.key,
-    required this.title, this.onPressed, required this.searchPressed, this.callBack,
+    required this.title, 
+    this.onPressed, 
+    required this.searchPressed, 
+    this.callBackButton,
+    this.callBackSearch,
   });
 
   @override
@@ -20,9 +25,17 @@ class SearchCustomAppBar extends StatelessWidget implements PreferredSizeWidget 
       backgroundColor: Colors.white,
       title: searchPressed ? 
       TextField(
+        onChanged: (value){
+          callBackSearch!(value);
+        },
         decoration: const InputDecoration(
           hintText: "Buscar...",
           border: InputBorder.none,
+          hintStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 30,
+            fontFamily: "8bits",
+          ),
         ),
       ) 
       :
@@ -45,13 +58,15 @@ class SearchCustomAppBar extends StatelessWidget implements PreferredSizeWidget 
         IconButton(
           icon: const Icon(Icons.close),
           onPressed: (){
-            callBack!();
+            callBackButton!();
           },
+          color: Colors.black,
         )
         :
         IconButton(
           icon: const Icon(Icons.arrow_back_ios),
           onPressed: context.pop,
+          color: Colors.black,
         ),
     );
 
