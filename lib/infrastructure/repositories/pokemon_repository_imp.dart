@@ -24,4 +24,9 @@ class PokemonRepositoryImp extends PokemonsRepository{
     return _pokemonDatasource.getPreviousPokemonList();
   }
 
+
+  @override
+  Future<Pokemon> getPokemonMoves(Pokemon pokemon)  {
+    return _pokemonDatasource.getPokemonMoves(pokemon);
+  }
 }

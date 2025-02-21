@@ -59,37 +59,50 @@ class PokemondbDatasource extends PokemonsDatasource {
     //Get the details of the pokemon
     final response = await dio.get(url);
     final pokemonResponse = PokemonResponse.fromJson(response.data);
-
-    //Get the moves of the pokemon
-    //final moves = pokemonResponse.moves;
-    //List<Moves> movesResult = [];
-
-    // for (var move in moves.take(4)) {
-    //   await dio.get(move.url).then((response) {
-    //     final moveResponse = PokemonMovesResponse.fromJson(response.data);
-    //     movesResult.add(Moves(name: move.name, type: moveResponse.type));
-    //     print('Moves: ${moveResponse.type}');
-    //   });
-    // }
-
     Pokemon resul = PokemonMapper.pokemonDBToEntity(pokemonResponse);
     return Future.value(resul);
   }
 
-  Future<void> getPokemonMoves(String urlMove, String moveName) async {
-  // Primero, obtenemos la URL del Pokémon
-  final pokemon = pokemons.firstWhere((pokemon) => pokemon.name == moveName);
-    // Si encontramos el Pokémon, procedemos a obtener sus movimientos
-    List<Moves> movesResult = [];
+  @override
+  Future<Pokemon> getPokemonMoves(Pokemon pokemon) async {
+    try {
+      // Verificamos si el Pokémon ya tiene movimientos cargados
+      if (pokemon.moves.isEmpty) return pokemon;
 
-    await dio.get(urlMove).then((response) {
-      final moveResponse = PokemonMovesResponse.fromJson(response.data);
-      movesResult.add(Moves(name: moveName, type: moveResponse.type));
-      print('Moves: ${moveResponse.type}');
-    });
+      // Creamos una lista para almacenar los movimientos obtenidos
+      List<Moves> movesResult = [];
 
-    // Ahora añadimos los movimientos obtenidos al Pokémon encontrado
-    pokemon.moves?.addAll(movesResult);
-    
+      // Hacemos todas las solicitudes en paralelo con Future.wait
+      await Future.wait(pokemon.moves.map((move) async {
+        try {
+          final response = await dio.get(move.url);
+          final moveResponse = PokemonMovesResponse.fromJson(response.data);
+
+            // Agregamos el movimiento a la lista temporal
+            if (moveResponse.type != "") {
+              movesResult.add(Moves(
+                name: move.name,
+                type: moveResponse.type,
+                url: move.url,
+              ));
+            }
+
+          print('Move type: ${moveResponse.type}, Move name: ${move.name}');
+        } catch (e) {
+          print('Error al obtener movimiento ${move.name}: $e');
+        }
+      }));
+
+      // Añadimos los movimientos obtenidos a la lista del Pokémon
+      pokemon.moves = movesResult;
+
+      return pokemon;
+    } catch (e) {
+      print('Error al obtener movimientos del Pokémon: $e');
+      return pokemon;
     }
   }
+
+
+
+}

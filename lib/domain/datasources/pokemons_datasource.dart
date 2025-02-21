@@ -7,4 +7,6 @@ abstract class PokemonsDatasource {
   Future<List<Pokemon>>getNextPokemonList();
 
   Future<List<Pokemon>> getPreviousPokemonList();
+
+  Future<Pokemon> getPokemonMoves(Pokemon pokemon) ;
 }

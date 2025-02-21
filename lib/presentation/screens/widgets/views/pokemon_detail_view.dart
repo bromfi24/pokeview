@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/presentation/screens/widgets/views/pokemon_moves_view.dart';
 
 class PokemonDetailView extends StatelessWidget {
   const PokemonDetailView({
@@ -39,70 +40,72 @@ class PokemonDetailInfo extends StatelessWidget {
   final Pokemon pokemon;
 
  @override
-Widget build(BuildContext context) {
-    return SizedBox.expand( // Asegura que la columna ocupe todo el espacio disponible
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start, // Alinea los elementos arriba
-        crossAxisAlignment: CrossAxisAlignment.center, // Centra horizontalmente
-        children: [
-          // IMÁGENES ARRIBA
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: pokemon.imagesUrl.map((imageUrl) => Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: Image.network(imageUrl, width: 90, height: 90),
-            )).toList(),
-          ),
-
-          const SizedBox(height: 20),
-
-          // ALTURA
-          Text(
-            'Height: ${pokemon.height} m',
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              fontFamily: "8bits",
+  Widget build(BuildContext context) {
+      return SizedBox.expand( // Asegura que la columna ocupe todo el espacio disponible
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start, // Alinea los elementos arriba
+          crossAxisAlignment: CrossAxisAlignment.center, // Centra horizontalmente
+          children: [
+            // IMÁGENES ARRIBA
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: pokemon.imagesUrl.map((imageUrl) => Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Image.network(imageUrl, width: 90, height: 90),
+              )).toList(),
             ),
-          ),
 
-          // PESO
-          Text(
-            'Weight: ${pokemon.weight} kg',
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              fontFamily: "8bits",
-            ),
-          ),
+            const SizedBox(height: 20),
 
-          // BASE XP (CORRECCIÓN: Debía ser pokemon.baseExperience en vez de height)
-          Text(
-            'Base XP: ${pokemon.baseXP}',
-            style: const TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
-              fontFamily: "8bits",
+            // ALTURA
+            Text(
+              'Height: ${pokemon.height} m',
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: "8bits",
+              ),
             ),
-          ),
-          // TIPOS DE POKÉMON
-          const SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: pokemon.types.map((type) {
-              String imagePath = '${Constants.ROUTE_ASSETS_TYPE}$type.png';
-              return Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Image.asset(
-                  imagePath,
-                  width: 50,
-                  height: 50,
-                ),
-              );
-            }).toList(),
-          ),
-        ],
-      ),
-    );
-  }
+
+            // PESO
+            Text(
+              'Weight: ${pokemon.weight} kg',
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: "8bits",
+              ),
+            ),
+
+            // BASE XP (CORRECCIÓN: Debía ser pokemon.baseExperience en vez de height)
+            Text(
+              'Base XP: ${pokemon.baseXP}',
+              style: const TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                fontFamily: "8bits",
+              ),
+            ),
+            // TIPOS DE POKÉMON
+            const SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: pokemon.types.map((type) {
+                String imagePath = '${Constants.ROUTE_ASSETS_TYPE}$type.png';
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: Image.asset(
+                    imagePath,
+                    width: 50,
+                    height: 50,
+                  ),
+                );
+              }).toList(),
+            ),
+            //MOVIMIENTOS DE POKEMON
+            PokemonMovesWidget(pokemon:pokemon),
+          ],
+        ),
+      );
+    }
 }

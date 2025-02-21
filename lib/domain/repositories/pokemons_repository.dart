@@ -1,4 +1,3 @@
-
 import 'package:pokeview/domain/entities/pokemon.dart';
 
 abstract class PokemonsRepository {
@@ -7,4 +6,6 @@ abstract class PokemonsRepository {
   Future<List<Pokemon>>getNextPokemonList();
 
   Future<List<Pokemon>> getPreviousPokemonList();
+
+  Future<Pokemon> getPokemonMoves(Pokemon pokemon) ;
 }

@@ -55,4 +55,14 @@ class PokemonsProvider extends ChangeNotifier{
       notifyListeners();
     }
   }
+
+  Future<Pokemon> getPokemonMoves(Pokemon pokemon) async {
+    try {
+      return await _pokemonsRepository.getPokemonMoves(pokemon);
+    } catch (e) {
+      debugPrint('Error fetching Pokémon moves: $e');
+      return pokemon; // Devolvemos el Pokémon original sin cambios
+    }
+  }
+
 }

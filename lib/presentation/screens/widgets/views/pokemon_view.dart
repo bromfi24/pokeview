@@ -11,7 +11,7 @@ class PokemonView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: ()  {
         context.push('/detail', extra: pokemon);
       },
       child: Container(
@@ -61,7 +61,6 @@ class PokemonInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(pokemon.name);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

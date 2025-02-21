@@ -5,7 +5,7 @@ import 'package:pokeview/domain/entities/pokemon.dart';
 import 'package:pokeview/infrastructure/model/pokemon_response.dart';
 
 class PokemonMapper {
-  static Pokemon pokemonDBToEntity(PokemonResponse pokemondb, {List<Moves>? moves}) {
+  static Pokemon pokemonDBToEntity(PokemonResponse pokemondb) {
     return Pokemon(
       id: pokemondb.id,
       name: pokemondb.name,
@@ -14,8 +14,7 @@ class PokemonMapper {
       weight: pokemondb.weight,
       baseXP: pokemondb.baseXP,
       types: pokemondb.types,
-      moves: moves ?? [],  
-      urlMoves: pokemondb.moves.map((move) => move.url).toList(),
+      moves: pokemondb.moves.map((move) => Moves(name: move.name, url: move.url, type: "")).toList(),
     );
   }
 }
