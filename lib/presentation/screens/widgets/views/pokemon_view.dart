@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/config/styles/shadowed_image.dart';
 
 class PokemonView extends StatelessWidget {
   final Pokemon pokemon;
@@ -36,11 +37,11 @@ class PokemonView extends StatelessWidget {
             Expanded(
               child: PokemonInfo(pokemon: pokemon),
             ),
-                        Image.network(
-              pokemon.imagesUrl[0],
-              width: 100, // Tamaño más grande de la imagen
-              height: 100,
-              fit: BoxFit.cover,
+            ShadowedImage(
+              imageUrl: pokemon.imagesUrl[0], 
+              width: 100, 
+              height: 100, 
+              shadowColor: Constants.typeColors[pokemon.types[0]] ?? Colors.white // Color por defecto,
             ),
             const SizedBox(width: 16), 
           ],
