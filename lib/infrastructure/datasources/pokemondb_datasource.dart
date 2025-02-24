@@ -34,15 +34,19 @@ class PokemondbDatasource extends PokemonsDatasource {
     next = listResponse.next;
     previous = listResponse.previous ?? '';
 
+    List<Pokemon> pokemonsAux = [];
+
     //Then we need to get the details of each pokemon
     Pokemon pokemon;
 
     for (var result in listResponse.results) {
       pokemon = await getPokemon(result.url);
       pokemons.add(pokemon);
+      pokemonsAux.add(pokemon);
     }
 
-    return Future.value(pokemons);
+
+    return Future.value(pokemonsAux);
   }
 
   @override
