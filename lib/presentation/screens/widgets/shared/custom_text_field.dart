@@ -47,10 +47,17 @@ class _FieldDecorationState extends State<FieldDecoration> {
     autofocus: false,
     decoration: InputDecoration(
       labelText: widget.labelText,
+      hintStyle: TextStyle(
+        color: Colors.black,   // Color del texto del hint
+        fontSize: 50,          // Tamaño del texto del hint
+        fontWeight: FontWeight.w400, 
+        fontFamily: '8bits' // Fuente del texto del hint
+      ),
       labelStyle: const TextStyle(
         color: Colors.black,   // Color del texto del label
-        fontSize: 15,      
-        fontWeight: FontWeight.w500,  // Tamaño del texto del label
+        fontSize: 25,      
+        fontWeight: FontWeight.w500, 
+        fontFamily: '8bits' // Tamaño del texto del label
       ),
       border: OutlineInputBorder(
         borderSide: const BorderSide(

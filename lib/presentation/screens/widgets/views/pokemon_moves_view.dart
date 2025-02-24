@@ -35,10 +35,11 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
   }
 
   Future<void> _loadMoves() async {
-    if (!isMounted) return;
+
     final discoverProvider = context.read<PokemonsProvider>();
-     // Esperamos la carga de movimientos
     _pokemon = await discoverProvider.getPokemonMoves(widget.pokemon);
+
+    if (!isMounted) return;
     setState((){
       _isLoading = false; // Cambiamos el estado cuando los movimientos se han cargado
     });

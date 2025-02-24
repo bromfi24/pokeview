@@ -55,7 +55,7 @@ class PokemonDetailInfo extends StatelessWidget {
                 child: ShadowedImage(imageUrl: imageUrl, width: 90, height: 90, shadowColor: Constants.typeColors[pokemon.types[0]] ?? Colors.white),
               )).toList(),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 35),
             // ALTURA
             Text(
               'Height: ${pokemon.height} m',

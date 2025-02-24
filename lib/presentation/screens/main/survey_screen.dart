@@ -100,7 +100,7 @@ class _SurveyUserState extends State<SurveyScreen> {
                 const SizedBox(height: 16),
                 CustomTextField(
                   controller: widget.dateController,
-                  labelText: 'Fecha de visualización',
+                  labelText: 'Fecha de visualizacion',
                   keyboardType: TextInputType.datetime,
                 ),
                 const SizedBox(height: 40),
