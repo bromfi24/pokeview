@@ -41,7 +41,7 @@ class PokemonDetailInfo extends StatelessWidget {
 
  @override
   Widget build(BuildContext context) {
-      return SizedBox.expand( // Asegura que la columna ocupe todo el espacio disponible
+      return SizedBox.expand( 
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start, // Alinea los elementos arriba
           crossAxisAlignment: CrossAxisAlignment.center, // Centra horizontalmente
@@ -102,6 +102,7 @@ class PokemonDetailInfo extends StatelessWidget {
                 );
               }).toList(),
             ),
+            const SizedBox(height: 30),
             //MOVIMIENTOS DE POKEMON
             PokemonMovesWidget(pokemon:pokemon),
           ],

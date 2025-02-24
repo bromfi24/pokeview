@@ -87,9 +87,9 @@ class PokemondbDatasource extends PokemonsDatasource {
               ));
             }
 
-          print('Move type: ${moveResponse.type}, Move name: ${move.name}');
+          //print('Move type: ${moveResponse.type}, Move name: ${move.name}');
         } catch (e) {
-          print('Error al obtener movimiento ${move.name}: $e');
+          //print('Error al obtener movimiento ${move.name}: $e');
         }
       }));
 
