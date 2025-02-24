@@ -1,5 +1,6 @@
 
 
+import 'package:flutter/material.dart';
 import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/domain/datasources/pokemons_datasource.dart';
 import 'package:pokeview/domain/entities/moves.dart';
@@ -71,7 +72,7 @@ class PokemondbDatasource extends PokemonsDatasource {
   Future<Pokemon> getPokemonMoves(Pokemon pokemon) async {
     try {
       // Verificamos si el Pokémon ya tiene movimientos cargados
-      if (pokemon.moves.isEmpty) return pokemon;
+      if (pokemon.movimientosCargados) return pokemon;
 
       // Creamos una lista para almacenar los movimientos obtenidos
       List<Moves> movesResult = [];
@@ -99,10 +100,11 @@ class PokemondbDatasource extends PokemonsDatasource {
 
       // Añadimos los movimientos obtenidos a la lista del Pokémon
       pokemon.moves = movesResult;
+      pokemon.movimientosCargados = true;
 
       return pokemon;
     } catch (e) {
-      print('Error al obtener movimientos del Pokémon: $e');
+      debugPrint('Error al obtener movimientos del Pokémon: $e');
       return pokemon;
     }
   }

@@ -10,6 +10,7 @@ class Pokemon {
   final double baseXP;
   final List<String> types;
   List<Moves> moves;
+  bool movimientosCargados = false;
 
   Pokemon({
     required this.id,
