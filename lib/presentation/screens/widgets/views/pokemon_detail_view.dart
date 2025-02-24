@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokeview/config/constants/constants.dart';
+import 'package:pokeview/config/styles/shadowed_image.dart';
 import 'package:pokeview/domain/entities/pokemon.dart';
 import 'package:pokeview/presentation/screens/widgets/views/pokemon_moves_view.dart';
 
@@ -51,12 +52,10 @@ class PokemonDetailInfo extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: pokemon.imagesUrl.map((imageUrl) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                child: Image.network(imageUrl, width: 90, height: 90),
+                child: ShadowedImage(imageUrl: imageUrl, width: 90, height: 90, shadowColor: Constants.typeColors[pokemon.types[0]] ?? Colors.white),
               )).toList(),
             ),
-
             const SizedBox(height: 20),
-
             // ALTURA
             Text(
               'Height: ${pokemon.height} m',
