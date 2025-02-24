@@ -37,6 +37,7 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
   Future<void> _loadMoves() async {
 
     final discoverProvider = context.read<PokemonsProvider>();
+
     _pokemon = await discoverProvider.getPokemonMoves(widget.pokemon);
 
     if (!isMounted) return;
@@ -48,24 +49,42 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
   @override
   Widget build(BuildContext context) {
     return _isLoading
-        ? PokeSpin(width: 50, height: 50, infinite: true) // Indicador de carga
-        : SizedBox(
-          height: 90,
-          width: double.infinity,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: _pokemon.moves.length,
-            itemBuilder: (context, index) {
-              final move = _pokemon.moves[index];
-              return Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: PokemonMoveCard(
-                  moveName: move.name,
-                  moveType: move.type,
+    ? PokeSpin(width: 50, height: 50, infinite: true) // Indicador de carga
+    : SizedBox(
+        height: 200,
+        width: double.infinity,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: (_pokemon.moves.length / 2).ceil(), // Asegúrate de contar la mitad, redondeando hacia arriba
+          itemBuilder: (context, index) {
+            final move_1 = _pokemon.moves[index * 2]; // Primer movimiento
+            final move_2 = (index * 2 + 1) < _pokemon.moves.length
+                ? _pokemon.moves[index * 2 + 1] // Segundo movimiento, solo si existe
+                : null; // Si no hay segundo movimiento, se asigna null
+                
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: PokemonMoveCard(
+                    moveName: move_1.name,
+                    moveType: move_1.type,
+                  ),
                 ),
-              );
-            },
-          ),
-        );
+                if (move_2 != null) ...[
+                  SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: PokemonMoveCard(
+                      moveName: move_2.name,
+                      moveType: move_2.type,
+                    ),
+                  ),
+                ]
+              ],
+            );
+          },
+        ),
+      );
   }
 }

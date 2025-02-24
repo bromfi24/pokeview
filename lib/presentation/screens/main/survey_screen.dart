@@ -41,6 +41,9 @@ class _SurveyUserState extends State<SurveyScreen> {
     widget.nameController.dispose();
     widget.emailController.dispose();
     widget.dateController.dispose();
+    widget.nameController.removeListener(validateForm);
+    widget.emailController.removeListener(validateForm);
+    widget.dateController.removeListener(validateForm);
     isMounted = false;
     super.dispose();
   }

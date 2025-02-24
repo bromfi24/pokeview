@@ -28,7 +28,7 @@ class PokemonMoveCard extends StatelessWidget {
             textAlign: TextAlign.center,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 20,
+              fontSize: 25,
               fontFamily: '8bits',
               color: Colors.black,
             ),
