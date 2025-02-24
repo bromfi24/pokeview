@@ -15,6 +15,9 @@ class PokemonMovesWidget extends StatefulWidget {
 class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
   late Pokemon _pokemon; // Variable para almacenar el Pokémon con sus movimientos
   bool _isLoading = true; // Para controlar el estado de carga
+  bool isMounted = true;
+
+  //TODO: Comprobar si esta montado el widget
 
   @override
   void initState() {
@@ -23,7 +26,14 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
     _loadMoves(); // Cargar movimientos de forma asíncrona
   }
 
+  @override
+  void dispose() {
+    isMounted = false;
+    super.dispose();
+  }
+
   Future<void> _loadMoves() async {
+    if (!isMounted) return;
     final discoverProvider = context.read<PokemonsProvider>();
      // Esperamos la carga de movimientos
     _pokemon = await discoverProvider.getPokemonMoves(widget.pokemon);
