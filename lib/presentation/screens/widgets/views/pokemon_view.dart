@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/config/constants/constants.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/config/styles/shadowed_image.dart';
 
 class PokemonView extends StatelessWidget {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pokeview/config/constants/constants.dart';
 import 'package:pokeview/config/styles/shadowed_image.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/presentation/screens/widgets/views/pokemon_moves_view.dart';
 
 class PokemonDetailView extends StatelessWidget {

@@ -1,5 +1,5 @@
 import 'package:go_router/go_router.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/presentation/screens/screens.dart';
 
 

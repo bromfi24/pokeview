@@ -1,5 +1,5 @@
 // This file contains the Pokemon entity which is used to represent a Pokemon in the application.
-import 'package:pokeview/domain/entities/moves.dart';
+import 'package:pokeview/model/moves.dart';
 
 class Pokemon {
   final int id;

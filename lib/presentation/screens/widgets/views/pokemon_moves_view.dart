@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/presentation/providers/pokemons_provider.dart';
 import 'package:pokeview/presentation/screens/widgets/progress/poke_spin.dart';
 import 'package:pokeview/presentation/screens/widgets/views/pokemon_detail_move.dart';

@@ -1,8 +1,8 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
-import 'package:pokeview/domain/repositories/pokemons_repository.dart';
+import 'package:pokeview/model/pokemon.dart';
+import 'package:pokeview/domain/pokemons_repository.dart';
 
 class PokemonsProvider extends ChangeNotifier{
   bool isLoadingMore = true;

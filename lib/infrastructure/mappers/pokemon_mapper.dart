@@ -1,7 +1,7 @@
 
 
-import 'package:pokeview/domain/entities/moves.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/model/moves.dart';
+import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/infrastructure/model/pokemon_response.dart';
 
 class PokemonMapper {

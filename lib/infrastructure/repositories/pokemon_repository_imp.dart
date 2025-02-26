@@ -1,8 +1,8 @@
 
 
-import 'package:pokeview/domain/datasources/pokemons_datasource.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
-import 'package:pokeview/domain/repositories/pokemons_repository.dart';
+import 'package:pokeview/domain/pokemons_datasource.dart';
+import 'package:pokeview/model/pokemon.dart';
+import 'package:pokeview/domain/pokemons_repository.dart';
 
 class PokemonRepositoryImp extends PokemonsRepository{
 

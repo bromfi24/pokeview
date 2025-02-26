@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:pokeview/config/constants/constants.dart';
-import 'package:pokeview/domain/datasources/pokemons_datasource.dart';
-import 'package:pokeview/domain/entities/moves.dart';
-import 'package:pokeview/domain/entities/pokemon.dart';
+import 'package:pokeview/domain/pokemons_datasource.dart';
+import 'package:pokeview/model/moves.dart';
+import 'package:pokeview/model/pokemon.dart';
 
 import 'package:dio/dio.dart';
 import 'package:pokeview/infrastructure/mappers/pokemon_mapper.dart';

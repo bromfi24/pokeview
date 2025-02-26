@@ -1,6 +1,7 @@
-import 'package:pokeview/domain/entities/pokemon.dart';
 
-abstract class PokemonsRepository {
+import 'package:pokeview/model/pokemon.dart';
+
+abstract class PokemonsDatasource {
   Future<List<Pokemon>> getPokemonsList(String url);
 
   Future<List<Pokemon>>getNextPokemonList();
