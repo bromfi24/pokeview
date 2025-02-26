@@ -26,7 +26,6 @@ enum PokemonTypes {
 }
 
 class Constants {
-  static const String API_URL_INITIAL_LIST = 'https://pokeapi.co/api/v2/pokemon/';
   static const String ROUTE_ASSETS_TYPE = 'assets/images/pokemon_types/';
   static List<Color> colorsMainScreen = [
     Colors.red,

@@ -1,30 +1,53 @@
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/presentation/view/screens.dart';
+import 'package:flutter/widgets.dart';
 
 
-final appRouter = GoRouter(
-  initialLocation: '/',
+abstract class NavigationRoutes {
+  // Route names
+  static const String initialRoute = '/';
+  static const String listRoute = 'list';
+  static const String detailRoute = 'detail';
+}
+
+// Nav keys
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>();
+final GlobalKey<NavigatorState> _pokemonNavigatorKey = GlobalKey<NavigatorState>();
+
+final router = GoRouter(
+  navigatorKey: _rootNavigatorKey,
+  initialLocation: NavigationRoutes.initialRoute,
   routes: [
+    // Ruta principal
     GoRoute(
-      path: '/',
-      name: MainScreen.routeName,
+      path: NavigationRoutes.initialRoute,
+      parentNavigatorKey: _rootNavigatorKey,
       builder: (context, state) => const MainScreen(),
-      routes: [
-        GoRoute(
-          path: 'list',
-          name: ListScreen.routeName,
-          builder: (context, state) => const ListScreen(),
-        ),
-        GoRoute(
-        path: 'detail',
-        name: DetailScreen.routeName,  // Asegúrate de que el nombre de la ruta sea único
-        builder: (context, state) {
-          final pokemon = state.extra as Pokemon; // Accede al objeto Pokémon
-          return DetailScreen(pokemon: pokemon); // Pasa el objeto al widget
-        },
-      ),
-      ]
     ),
-  ]
-);
+
+    // StatefulShellRoute para mantener el estado entre pestañas
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, shell) => MainScreen(),
+      branches: [
+        // Pestaña de Pokémon
+        StatefulShellBranch(navigatorKey: _pokemonNavigatorKey, routes: [
+          GoRoute(
+            path: NavigationRoutes.listRoute,
+            parentNavigatorKey: _pokemonNavigatorKey,
+            pageBuilder: (context, state) =>
+                const NoTransitionPage(child: ListScreen()),
+            routes: [
+              // Detalle del Pokémon
+              GoRoute(
+                path: NavigationRoutes.detailRoute,
+                builder: (context, state) {
+                  final extra = state.extra as Pokemon;
+                  return DetailScreen(pokemon: extra);
+                },
+              ),
+            ],
+          ),
+        ]),
+  ],
+)]);
