@@ -2,7 +2,7 @@
 
 import 'package:pokeview/model/moves.dart';
 import 'package:pokeview/model/pokemon.dart';
-import 'package:pokeview/infrastructure/model/pokemon_response.dart';
+import 'package:pokeview/model/pokemon_response.dart';
 
 class PokemonMapper {
   static Pokemon pokemonDBToEntity(PokemonResponse pokemondb) {

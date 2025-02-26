@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/domain/pokemons_repository.dart';

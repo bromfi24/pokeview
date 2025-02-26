@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:pokeview/config/constants/constants.dart';
-import 'package:pokeview/config/router/app_router.dart';
-import 'package:pokeview/config/theme/app_theme.dart';
+import 'package:pokeview/presentation/common/resources/constants.dart';
 import 'package:pokeview/infrastructure/datasources/pokemondb_datasource.dart';
 import 'package:pokeview/infrastructure/repositories/pokemon_repository_imp.dart';
+import 'package:pokeview/presentation/common/resources/app_styles.dart';
+import 'package:pokeview/presentation/navigation/navigation_routes.dart';
 import 'package:pokeview/presentation/providers/pokemons_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
       child: MaterialApp.router(
         routerConfig: appRouter,
         debugShowCheckedModeBanner: false,
-        theme: AppTheme().getTheme(),
+        theme: AppStyles.mainTheme,
       )
     );
   }

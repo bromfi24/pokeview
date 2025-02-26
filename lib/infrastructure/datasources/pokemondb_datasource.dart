@@ -1,16 +1,16 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:pokeview/config/constants/constants.dart';
+import 'package:pokeview/presentation/common/resources/constants.dart';
 import 'package:pokeview/domain/pokemons_datasource.dart';
 import 'package:pokeview/model/moves.dart';
 import 'package:pokeview/model/pokemon.dart';
 
 import 'package:dio/dio.dart';
 import 'package:pokeview/infrastructure/mappers/pokemon_mapper.dart';
-import 'package:pokeview/infrastructure/model/list_pokemon_response.dart';
-import 'package:pokeview/infrastructure/model/pokemon_response.dart';
-import 'package:pokeview/infrastructure/model/pokemon_response_moves.dart';
+import 'package:pokeview/model/list_pokemon_response.dart';
+import 'package:pokeview/model/pokemon_response.dart';
+import 'package:pokeview/model/pokemon_response_moves.dart';
 
 
 class PokemondbDatasource extends PokemonsDatasource {
