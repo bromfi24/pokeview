@@ -21,7 +21,7 @@ class PokemonViewModel extends BaseViewModel {
       pokemonListState.add(ResourceState.success(pokemons));
     }).catchError((e) {
       pokemonListState.add(ResourceState.error(
-          PokemonErrorBuilder.create(e, AppAction.GET_ARTISTS).build()));
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
     });
   }
 
@@ -31,7 +31,7 @@ class PokemonViewModel extends BaseViewModel {
       pokemonListState.add(ResourceState.success(pokemons));
     }).catchError((e) {
       pokemonListState.add(ResourceState.error(
-          PokemonErrorBuilder.create(e, AppAction.GET_ARTISTS).build()));
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
     });
   }
 
@@ -41,7 +41,7 @@ class PokemonViewModel extends BaseViewModel {
       pokemonListState.add(ResourceState.success(pokemons));
     }).catchError((e) {
       pokemonListState.add(ResourceState.error(
-          PokemonErrorBuilder.create(e, AppAction.GET_ARTISTS).build()));
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
     });
   }
 
@@ -51,10 +51,9 @@ class PokemonViewModel extends BaseViewModel {
       pokemonListState.add(ResourceState.success(pokemon));
     }).catchError((e) {
       pokemonListState.add(ResourceState.error(
-          PokemonErrorBuilder.create(e, AppAction.GET_ARTISTS).build()));
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
     });
   }
-
 
   @override
   void dispose() {

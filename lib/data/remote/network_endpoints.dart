@@ -1,8 +1,8 @@
 class NetworkEndpoints {
-  static const String _baseUrl =
+  static const String baseUrl =
       "https://pokeapi.co/api/v2/pokemon/";
 
   static String loginUrl = "";
   static String refreshTokenUrl = "";
-  static String artistsUrl = "";
+  static String pokemonUrl = baseUrl;
 }

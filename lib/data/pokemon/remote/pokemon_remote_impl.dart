@@ -6,6 +6,8 @@ import 'package:pokeview/model/pokemon_mapper.dart';
 import 'package:pokeview/model/list_pokemon_response.dart';
 import 'package:pokeview/model/pokemon_response.dart';
 import 'package:pokeview/model/pokemon_response_moves.dart';
+import 'dart:async';
+
 
 
 class PokemonRemoteImpl{
@@ -27,19 +29,17 @@ class PokemonRemoteImpl{
     next = listResponse.next;
     previous = listResponse.previous ?? '';
 
-    List<Pokemon> pokemonsAux = [];
-
     //Then we need to get the details of each pokemon
-    Pokemon pokemon;
-
-    for (var result in listResponse.results) {
-      pokemon = await getPokemon(result.url);
-      pokemons.add(pokemon);
-      pokemonsAux.add(pokemon);
-    }
 
 
-    return Future.value(pokemonsAux);
+
+    print('List of pokemons: ${listResponse.results}');
+
+    List<Future<Pokemon>> futures = listResponse.results.map((result) => getPokemon(result.url)).toList();
+    List<Pokemon> newPokemons = await Future.wait(futures);
+    pokemons.addAll(newPokemons);
+
+    return Future.value(pokemons);
   }
 
   Future<List<Pokemon>> getNextPokemonList(){
@@ -97,7 +97,4 @@ class PokemonRemoteImpl{
       return pokemon;
     }
   }
-
-
-
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/presentation/common/widget/buttons/poke_button.dart';
+import 'package:pokeview/presentation/navigation/navigation_routes.dart';
 import 'package:pokeview/presentation/view/auth/intro.dart';
 import 'package:pokeview/presentation/common/widget/input/generic_field.dart';
 
@@ -113,7 +114,7 @@ class _SurveyUserState extends State<SurveyScreen> {
                     PokeButton(
                       onTap: ()  {
                         clearFields();
-                        context.push('/list');
+                        context.go(NavigationRoutes.listRoute);
                       },
                     ),
                     const Text(

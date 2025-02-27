@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokeview/presentation/common/widget/loading/loading_pokeball.dart';
 
 class LoadingOverlay {
   static OverlayEntry? _overlay;
@@ -9,10 +10,9 @@ class LoadingOverlay {
     _overlay = OverlayEntry(builder: (BuildContext context) {
       return Stack(
         children: [
-          Container(
-              color:
-                  backgroundColor ?? Theme.of(context).scaffoldBackgroundColor),
-          const Center(child: CircularProgressIndicator()),
+          Align(
+            alignment: Alignment.bottomRight,
+            child: PokeSpin(width: 50, height: 50, infinite: true))
         ],
       );
     });

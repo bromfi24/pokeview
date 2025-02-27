@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokeview/presentation/navigation/navigation_routes.dart';
 
 class SearchCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String title;
@@ -88,7 +89,7 @@ class _SearchCustomAppBarState extends State<SearchCustomAppBar> {
             )
           : IconButton(
               icon: const Icon(Icons.arrow_back_ios),
-              onPressed: context.pop,
+              onPressed: (() => context.go(NavigationRoutes.initialRoute)),
               color: Colors.black,
             ),
     );

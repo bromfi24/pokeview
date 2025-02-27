@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:pokeview/core/di/app_modules.dart';
+import 'package:pokeview/data/remote/network_endpoints.dart';
+import 'package:pokeview/presentation/common/base/resource_state.dart';
 import 'package:pokeview/presentation/common/resources/constants.dart';
 import 'package:pokeview/model/pokemon.dart';
-import 'package:pokeview/presentation/providers/pokemons_provider.dart';
-import 'package:pokeview/presentation/common/widget/loading/loading_pokeball.dart';
+import 'package:pokeview/presentation/common/widget/error/error_overlay.dart';
+import 'package:pokeview/presentation/common/widget/loading/loading_overlay.dart';
 import 'package:pokeview/presentation/common/resources/background_gradient.dart';
 import 'package:pokeview/presentation/common/widget/appbar/search_app_bar.dart';
 import 'package:pokeview/presentation/view/pokemon/pokemon_view.dart';
-import 'package:provider/provider.dart';
+import 'package:pokeview/presentation/view/pokemon/viewmodel/pokemon_view_model.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
-
-  static const routeName = 'list-screen';
 
   @override
   State<ListScreen> createState() => _ListScreenState();
@@ -19,10 +20,12 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
 
+  final _pokemonViewModel = inject<PokemonViewModel>();
   late ScrollController _scrollController;
   bool isMounted = false;
   bool searchPressed = false;
   String query = '';
+  List<Pokemon> pokemons = [];
 
   @override
   void initState() {
@@ -31,6 +34,29 @@ class _ListScreenState extends State<ListScreen> {
     _scrollController = ScrollController();
     // Agregar un listener para detectar cuando el scroll ha llegado al final
     _scrollController.addListener(_scrollListener);
+
+    _pokemonViewModel.pokemonListState.stream.listen((state){
+      switch(state.status){
+        case Status.LOADING:
+          LoadingOverlay.show(context);
+          break;
+        case Status.SUCCESS:
+          LoadingOverlay.hide();
+          setState(() {
+            pokemons = state.data;
+          });
+          break;
+        case Status.ERROR:
+          LoadingOverlay.hide();
+          ErrorOverlay.of(context).show(state.error);
+          break;
+        default:
+          LoadingOverlay.hide();
+          break;
+      }
+    });
+
+    _pokemonViewModel.getPokemonsList(NetworkEndpoints.baseUrl);
   }
 
   // El listener que se llama cuando el scroll cambia
@@ -38,8 +64,8 @@ class _ListScreenState extends State<ListScreen> {
     // Comprobamos si hemos llegado al final de la lista
     if( (_scrollController.position.pixels + 500) >= _scrollController.position.maxScrollExtent ) {
       // Si es así, llamamos al método de carga de más Pokémon
-      context.read<PokemonsProvider>().getNextPokemonsList();
-      moveScrollToBottom();
+      _pokemonViewModel.getNextPokemonList();
+      //moveScrollToBottom();
     }
   }
 
@@ -52,7 +78,6 @@ class _ListScreenState extends State<ListScreen> {
       );
     }
 
-
   @override
   void dispose() {
     // Asegúrate de liberar el controlador cuando no lo necesites
@@ -62,9 +87,8 @@ class _ListScreenState extends State<ListScreen> {
     super.dispose();
   }
 
- @override
+@override
   Widget build(BuildContext context) {
-    final discoverProvider = context.watch<PokemonsProvider>();
     return Scaffold(
       appBar: SearchCustomAppBar(
         title: "Hazte con todos!",
@@ -91,17 +115,9 @@ class _ListScreenState extends State<ListScreen> {
           BackgroundGradient(
             colorsList: Constants.colorsListScreen,
             child: PokemonVisualizer(
-              discoverProvider: discoverProvider,
               scrollController: _scrollController,
               query: query,
-            ),
-          ),
-          // El indicador flotante de carga aparece solo si `isLoadingMore` es true
-          Visibility(
-            visible: discoverProvider.isLoadingMore,
-            child: Align(
-              alignment: Alignment.bottomRight,
-              child: PokeSpin(infinite: true, width: 60, height: 60),
+              pokemons: pokemons,
             ),
           ),
         ],
@@ -113,14 +129,15 @@ class _ListScreenState extends State<ListScreen> {
 class PokemonVisualizer extends StatefulWidget {
   const PokemonVisualizer({
     super.key,
-    required this.discoverProvider,
     required this.scrollController,
     required this.query,
+    required this.pokemons,
   });
-
-  final PokemonsProvider discoverProvider;
   final ScrollController scrollController;
   final String query;
+  final List<Pokemon> pokemons;
+
+
 
   @override
   State<PokemonVisualizer> createState() => _PokemonVisualizerState();
@@ -131,20 +148,20 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
   List<Pokemon> totalPokemon = [];
   List<Pokemon> filteredPokemon = [];
 
-
   @override
   void initState() {
     super.initState();
-    //En un inicio las dos listas serán iguales
-    totalPokemon = widget.discoverProvider.pokemons;
+    totalPokemon = widget.pokemons;
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    setState(() {
-      totalPokemon = widget.discoverProvider.pokemons;
-    });
+  void didUpdateWidget(PokemonVisualizer oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.pokemons != widget.pokemons) {
+      setState(() {
+        totalPokemon = widget.pokemons; // Actualiza cuando cambie la propiedad
+      });
+    }
   }
   
   @override
