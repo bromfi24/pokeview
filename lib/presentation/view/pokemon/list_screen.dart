@@ -38,7 +38,7 @@ class _ListScreenState extends State<ListScreen> {
     _pokemonViewModel.pokemonListState.stream.listen((state){
       switch(state.status){
         case Status.LOADING:
-          LoadingOverlay.show(context);
+          LoadingOverlay.show(context,  Alignment.center);
           break;
         case Status.SUCCESS:
           LoadingOverlay.hide();

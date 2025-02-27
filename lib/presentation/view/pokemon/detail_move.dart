@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pokeview/presentation/common/resources/constants.dart';
 
 class PokemonMoveCard extends StatelessWidget {
   final String moveName;
@@ -33,7 +34,7 @@ class PokemonMoveCard extends StatelessWidget {
             ),
           ),
           Image.asset(
-            'assets/images/pokemon_types/$moveType.png',
+            '${Constants.ROUTE_ASSETS_TYPE}$moveType.png',
             width: 40,
             height: 40,
           ),
