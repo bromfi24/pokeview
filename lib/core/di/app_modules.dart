@@ -20,7 +20,6 @@ class AppModules {
 
   _setupMainModule() {
     inject.registerSingleton(HttpClient());
-    
   }
 
   _setupAuthModule() {

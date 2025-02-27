@@ -84,6 +84,7 @@ class _ListScreenState extends State<ListScreen> {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     isMounted = false;
+    LoadingOverlay.hide();
     super.dispose();
   }
 

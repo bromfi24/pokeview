@@ -89,7 +89,7 @@ class _SearchCustomAppBarState extends State<SearchCustomAppBar> {
             )
           : IconButton(
               icon: const Icon(Icons.arrow_back_ios),
-              onPressed: (() => context.go(NavigationRoutes.initialRoute)),
+              onPressed:(() => context.go(NavigationRoutes.initialRoute)),
               color: Colors.black,
             ),
     );

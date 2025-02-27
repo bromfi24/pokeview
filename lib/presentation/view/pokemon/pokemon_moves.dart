@@ -60,6 +60,7 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
   @override
   void dispose() {
     isMounted = false;
+    LoadingOverlay.hide();
     super.dispose();
   }
 
