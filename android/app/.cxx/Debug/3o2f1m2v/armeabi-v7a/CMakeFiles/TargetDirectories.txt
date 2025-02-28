@@ -1,0 +1,2 @@
+C:/Repositorios/pokeview/android/app/.cxx/Debug/3o2f1m2v/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Repositorios/pokeview/android/app/.cxx/Debug/3o2f1m2v/armeabi-v7a/CMakeFiles/rebuild_cache.dir

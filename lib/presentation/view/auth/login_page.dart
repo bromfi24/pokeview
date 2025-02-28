@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:pokeview/presentation/common/resources/responsive.dart';
 import 'package:pokeview/presentation/common/widget/buttons/poke_button.dart';
 import 'package:pokeview/presentation/navigation/navigation_routes.dart';
 import 'package:pokeview/presentation/view/auth/intro.dart';
@@ -69,68 +70,71 @@ class _SurveyUserState extends State<SurveyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = Responsive.of(context);
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
       child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(35.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(height: 20),
-                const Text(
-                  'PokeView',
-                    style: TextStyle(
-                    fontSize: 85,  
-                    fontFamily: 'PokemonFont',  
-                    fontWeight: FontWeight.bold,
-                  ),
+        child: Padding(
+          padding: EdgeInsets.all(responsive.widthPercent(5)),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: responsive.heightPercent(2)),
+              Text(
+                'PokeView',
+                style: TextStyle(
+                  fontSize: responsive.widthPercent(15), // Ajusta el tamaño de fuente
+                  fontFamily: 'PokemonFont',
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 60),
-                CustomTextField(
-                  controller: widget.nameController,
-                  labelText: 'Nombre y Apellidos',
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  controller: widget.emailController,
-                  labelText: 'Email de contacto',
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 16),
-                CustomTextField(
-                  controller: widget.dateController,
-                  labelText: 'Fecha de visualizacion',
-                  keyboardType: TextInputType.datetime,
-                ),
-                const SizedBox(height: 40),
-                isCompleted ? 
-                Column(
-                  children: [
-                    PokeButton(
-                      onTap: ()  {
-                        clearFields();
-                        context.go(NavigationRoutes.listRoute);
-                      },
-                    ),
-                    const Text(
-                      'Pulsa en la pokeball para continuar',
-                      textAlign: TextAlign.center,
-                        style: TextStyle(
-                        fontSize: 30,  
-                        fontFamily: 'PokemonFont',  
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ],
-                ) 
-                : const IntroWidget(),
-              ],
-            ),
+              ),
+              SizedBox(height: responsive.heightPercent(5)),
+              CustomTextField(
+                controller: widget.nameController,
+                labelText: 'Nombre y Apellidos',
+              ),
+              SizedBox(height: responsive.heightPercent(2)),
+              CustomTextField(
+                controller: widget.emailController,
+                labelText: 'Email de contacto',
+                keyboardType: TextInputType.emailAddress,
+              ),
+              SizedBox(height: responsive.heightPercent(2)),
+              CustomTextField(
+                controller: widget.dateController,
+                labelText: 'Fecha de visualización',
+                keyboardType: TextInputType.datetime,
+              ),
+              SizedBox(height: responsive.heightPercent(5)),
+              isCompleted
+                  ? Column(
+                      children: [
+                        PokeButton(
+                          onTap: () {
+                            clearFields();
+                            context.go(NavigationRoutes.listRoute);
+                          },
+                        ),
+                        SizedBox(height: responsive.heightPercent(2)),
+                        Text(
+                          'Pulsa en la pokeball para continuar',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: responsive.widthPercent(6), // Tamaño de fuente responsive
+                            fontFamily: 'PokemonFont',
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )
+                  : const IntroWidget(),
+            ],
           ),
         ),
+      ),
     );
   }
 }

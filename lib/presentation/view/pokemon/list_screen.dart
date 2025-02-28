@@ -10,6 +10,7 @@ import 'package:pokeview/presentation/common/resources/background_gradient.dart'
 import 'package:pokeview/presentation/common/widget/appbar/search_app_bar.dart';
 import 'package:pokeview/presentation/view/pokemon/pokemon_view.dart';
 import 'package:pokeview/presentation/view/pokemon/viewmodel/pokemon_view_model.dart';
+import 'package:pokeview/presentation/common/resources/responsive.dart'; // Importar la clase Responsive
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key});
@@ -19,7 +20,6 @@ class ListScreen extends StatefulWidget {
 }
 
 class _ListScreenState extends State<ListScreen> {
-
   final _pokemonViewModel = inject<PokemonViewModel>();
   late ScrollController _scrollController;
   bool isMounted = false;
@@ -30,15 +30,13 @@ class _ListScreenState extends State<ListScreen> {
   @override
   void initState() {
     super.initState();
-    // Inicializando el controlador
     _scrollController = ScrollController();
-    // Agregar un listener para detectar cuando el scroll ha llegado al final
     _scrollController.addListener(_scrollListener);
 
-    _pokemonViewModel.pokemonListState.stream.listen((state){
-      switch(state.status){
+    _pokemonViewModel.pokemonListState.stream.listen((state) {
+      switch (state.status) {
         case Status.LOADING:
-          LoadingOverlay.show(context,  Alignment.center);
+          LoadingOverlay.show(context, Alignment.center);
           break;
         case Status.SUCCESS:
           LoadingOverlay.hide();
@@ -59,28 +57,14 @@ class _ListScreenState extends State<ListScreen> {
     _pokemonViewModel.getPokemonsList(NetworkEndpoints.baseUrl);
   }
 
-  // El listener que se llama cuando el scroll cambia
   void _scrollListener() {
-    // Comprobamos si hemos llegado al final de la lista
-    if( (_scrollController.position.pixels + 500) >= _scrollController.position.maxScrollExtent ) {
-      // Si es así, llamamos al método de carga de más Pokémon
+    if ((_scrollController.position.pixels + 500) >= _scrollController.position.maxScrollExtent) {
       _pokemonViewModel.getNextPokemonList();
-      //moveScrollToBottom();
     }
   }
 
-    void moveScrollToBottom() {
-    if( _scrollController.position.pixels + 100 <= _scrollController.position.maxScrollExtent ) return;
-      _scrollController.animateTo(
-        _scrollController.position.pixels + 120, 
-        duration: const Duration(milliseconds: 300), 
-        curve: Curves.fastOutSlowIn
-      );
-    }
-
   @override
   void dispose() {
-    // Asegúrate de liberar el controlador cuando no lo necesites
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
     isMounted = false;
@@ -88,28 +72,29 @@ class _ListScreenState extends State<ListScreen> {
     super.dispose();
   }
 
-@override
+  @override
   Widget build(BuildContext context) {
+    final responsive = Responsive.of(context); // Inicializamos la clase Responsive
+
     return Scaffold(
       appBar: SearchCustomAppBar(
         title: "Hazte con todos!",
-        onPressed: (){
+        onPressed: () {
           setState(() {
             searchPressed = true;
           });
-        }, 
-        searchPressed: searchPressed,
-        callBackButton: (){
-          setState(() {
-              searchPressed = false;
-            }
-          );
         },
-        callBackSearch: (String query){
+        searchPressed: searchPressed,
+        callBackButton: () {
+          setState(() {
+            searchPressed = false;
+          });
+        },
+        callBackSearch: (String query) {
           setState(() {
             this.query = query;
           });
-        }
+        },
       ),
       body: Stack(
         children: [
@@ -119,6 +104,7 @@ class _ListScreenState extends State<ListScreen> {
               scrollController: _scrollController,
               query: query,
               pokemons: pokemons,
+              responsive: responsive, // Pasamos el responsive
             ),
           ),
         ],
@@ -133,19 +119,18 @@ class PokemonVisualizer extends StatefulWidget {
     required this.scrollController,
     required this.query,
     required this.pokemons,
+    required this.responsive, // Pasamos el responsive
   });
   final ScrollController scrollController;
   final String query;
   final List<Pokemon> pokemons;
-
-
+  final Responsive responsive; // Variable responsive
 
   @override
   State<PokemonVisualizer> createState() => _PokemonVisualizerState();
 }
 
 class _PokemonVisualizerState extends State<PokemonVisualizer> {
-
   List<Pokemon> totalPokemon = [];
   List<Pokemon> filteredPokemon = [];
 
@@ -160,26 +145,29 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.pokemons != widget.pokemons) {
       setState(() {
-        totalPokemon = widget.pokemons; // Actualiza cuando cambie la propiedad
+        totalPokemon = widget.pokemons;
       });
     }
   }
-  
+
   @override
   Widget build(BuildContext context) {
     filteredPokemon = widget.query.isEmpty
         ? totalPokemon
-        : totalPokemon.where((pokemon) => 
+        : totalPokemon.where((pokemon) =>
             pokemon.name.toLowerCase().startsWith(widget.query.toLowerCase())
-          ).toList();
+        ).toList();
+
     return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-      controller: widget.scrollController, 
+      padding: EdgeInsets.symmetric(horizontal: widget.responsive.widthPercent(5)), // Ajuste de padding
+      controller: widget.scrollController,
       scrollDirection: Axis.vertical,
       itemCount: filteredPokemon.length,
       itemBuilder: (context, index) {
         final pokemon = filteredPokemon[index];
-        return PokemonView(pokemon: pokemon);
+        return PokemonView(
+          pokemon: pokemon, // Pasamos el responsive al PokemonView
+        );
       },
     );
   }

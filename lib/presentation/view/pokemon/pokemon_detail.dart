@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokeview/presentation/common/resources/constants.dart';
+import 'package:pokeview/presentation/common/resources/responsive.dart';
 import 'package:pokeview/presentation/common/resources/shadowed_image.dart';
 import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/presentation/view/pokemon/pokemon_moves.dart';
@@ -17,8 +18,8 @@ class PokemonDetailView extends StatelessWidget {
     return SingleChildScrollView(
       child: Center(
         child: Container(
-          width: 440,
-          height: 720,
+          width: Responsive.of(context).widthPercent(90),
+          height: Responsive.of(context).heightPercent(80),
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: Colors.white,

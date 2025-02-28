@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pokeview/presentation/common/resources/constants.dart';
 import 'package:pokeview/model/pokemon.dart';
+import 'package:pokeview/presentation/common/resources/responsive.dart';
 import 'package:pokeview/presentation/common/resources/shadowed_image.dart';
 
 class PokemonView extends StatelessWidget {
@@ -10,13 +11,15 @@ class PokemonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
+
     return GestureDetector(
-      onTap: ()  {
+      onTap: () {
         context.push('/detail', extra: pokemon);
       },
       child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 8.0),
-        padding: const EdgeInsets.all(12.0),
+        margin: EdgeInsets.symmetric(vertical: responsive.heightPercent(1)),
+        padding: EdgeInsets.all(responsive.widthPercent(3)),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border.all(
@@ -33,17 +36,17 @@ class PokemonView extends StatelessWidget {
           ],
         ),
         child: Row(
-          children: [// Espaciado entre imagen y texto
+          children: [
             Expanded(
               child: PokemonInfo(pokemon: pokemon),
             ),
             ShadowedImage(
-              imageUrl: pokemon.imagesUrl[0], 
-              width: 100, 
-              height: 100, 
-              shadowColor: Constants.typeColors[pokemon.types[0]] ?? Colors.white // Color por defecto,
+              imageUrl: pokemon.imagesUrl[0],
+              width: responsive.widthPercent(20),
+              height: responsive.widthPercent(20),
+              shadowColor: Constants.typeColors[pokemon.types[0]] ?? Colors.white,
             ),
-            const SizedBox(width: 16), 
+            SizedBox(width: responsive.widthPercent(3)),
           ],
         ),
       ),
@@ -61,6 +64,8 @@ class PokemonInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Responsive responsive = Responsive.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -68,13 +73,13 @@ class PokemonInfo extends StatelessWidget {
           children: [
             Image.asset(
               'assets/images/pokeball.png',
-              width: 20,
-              height: 20,
+              width: responsive.widthPercent(5),
+              height: responsive.widthPercent(5),
             ),
             Text(
               pokemon.id.toString(),
-              style: const TextStyle(
-                fontSize: 30,
+              style: TextStyle(
+                fontSize: responsive.widthPercent(8),
                 fontWeight: FontWeight.bold,
                 fontFamily: "8bits",
               ),
@@ -83,30 +88,29 @@ class PokemonInfo extends StatelessWidget {
         ),
         Expanded(
           child: Column(
-            mainAxisSize: MainAxisSize.min, // Para que la columna solo ocupe lo necesario
-            crossAxisAlignment: CrossAxisAlignment.center, // Centra el contenido
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Text(
                 pokemon.name,
-                textAlign: TextAlign.center, // Centra el texto
-                style: const TextStyle(
-                  fontSize: 40,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: responsive.widthPercent(10),
                   fontWeight: FontWeight.bold,
                   fontFamily: "8bits",
                 ),
               ),
-              const SizedBox(height: 8), // Espacio entre el nombre y los tipos
+              SizedBox(height: responsive.heightPercent(1.5)),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center, // Centra los tipos
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: pokemon.types.map((type) {
-                  // Construir la ruta de la imagen para cada tipo
                   String imagePath = '${Constants.ROUTE_ASSETS_TYPE}$type.png';
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    padding: EdgeInsets.symmetric(horizontal: responsive.widthPercent(1)),
                     child: Image.asset(
                       imagePath,
-                      width: 50, // Ajusta el tamaño de las imágenes
-                      height: 50, // Ajusta el tamaño de las imágenes
+                      width: responsive.widthPercent(10),
+                      height: responsive.widthPercent(10),
                     ),
                   );
                 }).toList(),
@@ -117,5 +121,4 @@ class PokemonInfo extends StatelessWidget {
       ],
     );
   }
-
 }

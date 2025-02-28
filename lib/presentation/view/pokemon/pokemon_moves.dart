@@ -6,6 +6,7 @@ import 'package:pokeview/presentation/common/widget/error/error_overlay.dart';
 import 'package:pokeview/presentation/common/widget/loading/loading_overlay.dart';
 import 'package:pokeview/presentation/view/pokemon/detail_move.dart';
 import 'package:pokeview/presentation/view/pokemon/viewmodel/pokemon_view_model.dart';
+import 'package:pokeview/presentation/common/resources/responsive.dart'; // Importamos la clase Responsive
 
 class PokemonMovesWidget extends StatefulWidget {
   final Pokemon pokemon;
@@ -18,7 +19,7 @@ class PokemonMovesWidget extends StatefulWidget {
 
 class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
   late Pokemon _pokemon;
-  bool _isLoading = true; // Controla si la carga está en curso
+  bool _isLoading = true;
   bool isMounted = true;
   final _pokemonViewModel = inject<PokemonViewModel>();
 
@@ -28,7 +29,7 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
     _pokemon = widget.pokemon;
 
     _pokemonViewModel.pokemonListState.stream.listen((state) {
-      if (!isMounted) return; // Evitar actualizaciones si el widget está desmontado
+      if (!isMounted) return;
 
       switch (state.status) {
         case Status.LOADING:
@@ -37,7 +38,7 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
         case Status.SUCCESS:
           LoadingOverlay.hide();
           setState(() {
-            _pokemon = state.data as Pokemon; // Asumimos que state.data es un Pokemon
+            _pokemon = state.data as Pokemon;
             _isLoading = false;
           });
           break;
@@ -45,7 +46,7 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
           LoadingOverlay.hide();
           ErrorOverlay.of(context).show(state.error);
           setState(() {
-            _isLoading = false; // Permitir manejar el error en build si deseas
+            _isLoading = false;
           });
           break;
         default:
@@ -66,14 +67,14 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final responsive = Responsive.of(context); // Inicializamos la clase Responsive
+
     if (_isLoading) {
-      // Mientras está cargando, no renderizamos el ListView
-      return const SizedBox.shrink(); // Widget vacío mientras carga
+      return const SizedBox.shrink(); // Mientras se carga, no mostramos nada
     }
 
-    // Solo renderizamos cuando la carga ha terminado con éxito
     return SizedBox(
-      height: 200,
+      height: responsive.heightPercent(40), // Ajustamos el tamaño según el alto de la pantalla
       width: double.infinity,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -84,26 +85,25 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
               ? _pokemon.moves[index * 2 + 1]
               : null;
 
-          return Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: PokemonMoveCard(
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: responsive.widthPercent(2), // Ajustamos el espaciado horizontal
+            ),
+            child: Column(
+              children: [
+                PokemonMoveCard(
                   moveName: move_1.name,
                   moveType: move_1.type,
                 ),
-              ),
-              if (move_2 != null) ...[
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: PokemonMoveCard(
+                if (move_2 != null) ...[
+                  SizedBox(height: responsive.heightPercent(1)), // Ajustamos el espacio entre las tarjetas
+                  PokemonMoveCard(
                     moveName: move_2.name,
                     moveType: move_2.type,
                   ),
-                ),
-              ]
-            ],
+                ]
+              ],
+            ),
           );
         },
       ),
