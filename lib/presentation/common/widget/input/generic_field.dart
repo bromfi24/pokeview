@@ -13,8 +13,6 @@ class CustomTextField extends StatelessWidget {
   });
 
 
-  //TODO: Implementar un controlador que capture los datos introducidos
-
   @override
   Widget build(BuildContext context) {
     return FieldDecoration(controller: controller, keyboardType: keyboardType, labelText: labelText);
