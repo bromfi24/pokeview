@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pokeview/presentation/common/resources/constants.dart';
-import 'package:pokeview/presentation/view/auth/login_page.dart';
+import 'package:pokeview/presentation/view/auth/welcome.dart';
 import 'package:pokeview/presentation/common/resources/background_gradient.dart';
 
 class MainScreen extends StatelessWidget {
@@ -11,7 +11,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BackgroundGradient(colorsList: Constants.colorsMainScreen,child: SurveyScreen()),
+      body: BackgroundGradient(colorsList: Constants.colorsListScreen,child: WelcomeScreen()),
     );
   }
 }
