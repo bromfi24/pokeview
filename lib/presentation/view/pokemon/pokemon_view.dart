@@ -7,7 +7,8 @@ import 'package:pokeview/presentation/common/resources/shadowed_image.dart';
 
 class PokemonView extends StatelessWidget {
   final Pokemon pokemon;
-  const PokemonView({super.key, required this.pokemon});
+  final void Function() onDelete;
+  const PokemonView({super.key, required this.pokemon, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,10 @@ class PokemonView extends StatelessWidget {
 
     return GestureDetector(
       onTap: () {
-        context.push('/detail', extra: pokemon);
+        context.push('/detail', extra: {
+          'pokemon': pokemon,
+          'onDelete': onDelete,	
+        });
       },
       child: Container(
         margin: EdgeInsets.symmetric(vertical: responsive.heightPercent(1)),

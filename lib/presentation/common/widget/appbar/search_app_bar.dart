@@ -9,6 +9,7 @@ class SearchCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final Function()? callBackButton;
   final Function(String query)? callBackSearch;
   String? initialQuery; // Para recordar lo que se escribió antes
+  String backRoute;
 
   SearchCustomAppBar({
     super.key,
@@ -18,6 +19,7 @@ class SearchCustomAppBar extends StatefulWidget implements PreferredSizeWidget {
     this.callBackButton,
     this.callBackSearch,
     this.initialQuery, // Parámetro opcional
+    required this.backRoute,
   });
 
   @override
@@ -74,6 +76,11 @@ class _SearchCustomAppBarState extends State<SearchCustomAppBar> {
             ),
       actions: [
         IconButton(
+          icon: const Icon(Icons.favorite_border),
+          onPressed:(() => context.go(NavigationRoutes.favoriteRoute)),
+          color: Colors.black,
+        ),
+        IconButton(
           icon: const Icon(Icons.search),
           onPressed: widget.onPressed,
           color: Colors.black,
@@ -87,9 +94,9 @@ class _SearchCustomAppBarState extends State<SearchCustomAppBar> {
               },
               color: Colors.black,
             )
-          : IconButton(
+          : IconButton( 
               icon: const Icon(Icons.arrow_back_ios),
-              onPressed:(() => context.go(NavigationRoutes.initialRoute)),
+              onPressed:(() => context.go(widget.backRoute)),
               color: Colors.black,
             ),
     );

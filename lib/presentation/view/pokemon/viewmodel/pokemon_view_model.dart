@@ -55,6 +55,46 @@ class PokemonViewModel extends BaseViewModel {
     });
   }
 
+  Future<void> savePokemon(Pokemon pokemon)async {
+    pokemonListState.add(ResourceState.loading());
+    _pokemonsRepository.savePokemon(pokemon).then((_) {
+      pokemonListState.add(ResourceState.success(pokemon));
+    }).catchError((e) {
+      pokemonListState.add(ResourceState.error(
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
+    });
+  } 
+
+  Future<void> deletePokemon (Pokemon pokemon) async {
+    pokemonListState.add(ResourceState.loading());
+    _pokemonsRepository.deletePokemon(pokemon).then((_) {
+      pokemonListState.add(ResourceState.success(pokemon));
+    }).catchError((e) {
+      pokemonListState.add(ResourceState.error(
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
+    });
+  } 
+
+  Future<void> getSavedPokemons() async {
+    pokemonListState.add(ResourceState.loading());
+    _pokemonsRepository.getSavedPokemons().then((pokemons) {
+      pokemonListState.add(ResourceState.success(pokemons));
+    }).catchError((e) {
+      pokemonListState.add(ResourceState.error(
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
+    });
+  }
+
+  Future<void> isPokemonFavorite(Pokemon pokemon) async {
+    pokemonListState.add(ResourceState.loading());
+    _pokemonsRepository.isPokemonFavorite(pokemon.id).then((isFavorite) {
+      pokemonListState.add(ResourceState.success(isFavorite));
+    }).catchError((e) {
+      pokemonListState.add(ResourceState.error(
+          PokemonErrorBuilder.create(e, AppAction.GET_POKEMOM).build()));
+    });
+  }
+
   @override
   void dispose() {
     pokemonListState.close();

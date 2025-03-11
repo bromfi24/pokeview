@@ -8,4 +8,12 @@ abstract class PokemonsRepository {
   Future<List<Pokemon>> getPreviousPokemonList();
 
   Future<Pokemon> getPokemonMoves(Pokemon pokemon) ;
+
+  Future<void> savePokemon(Pokemon pokemon); 
+
+  Future<void> deletePokemon(Pokemon pokemon);
+
+  Future<List<Pokemon>> getSavedPokemons();
+
+  Future<bool> isPokemonFavorite(int id);
 }

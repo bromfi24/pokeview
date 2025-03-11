@@ -33,7 +33,7 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
 
       switch (state.status) {
         case Status.LOADING:
-          LoadingOverlay.show(context, Alignment.center);
+          LoadingOverlay.show(context, Alignment.bottomCenter);
           break;
         case Status.SUCCESS:
           LoadingOverlay.hide();
@@ -74,7 +74,7 @@ class _PokemonMovesWidgetState extends State<PokemonMovesWidget> {
     }
 
     return SizedBox(
-      height: responsive.heightPercent(40), // Ajustamos el tamaño según el alto de la pantalla
+      height: responsive.heightPercent(25), // Ajustamos el tamaño según el alto de la pantalla
       width: double.infinity,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,

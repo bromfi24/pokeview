@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:pokeview/data/localdatabase/database_helper.dart';
+import 'package:pokeview/data/localdatabase/pokemon_database.dart';
 import 'package:pokeview/model/moves.dart';
 import 'package:pokeview/model/pokemon.dart';
 import 'package:pokeview/data/remote/http_client.dart';
@@ -7,6 +9,8 @@ import 'package:pokeview/model/list_pokemon_response.dart';
 import 'package:pokeview/model/pokemon_response.dart';
 import 'package:pokeview/model/pokemon_response_moves.dart';
 import 'dart:async';
+
+import 'package:sqflite/sqflite.dart';
 
 
 
@@ -19,7 +23,13 @@ class PokemonRemoteImpl{
   static String previous = '';
 
   List<Pokemon> pokemons = [];
+  Database? _database;
 
+   /// Inicializa la base de datos antes de usarla
+  Future<void> _initDatabase() async {
+    debugPrint('Inicializando base de datos o comprobando si ya está inicializada');
+    _database = await DatabaseHelper.database;
+  }
 
   Future<List<Pokemon>> getPokemonsList(String url) async {
     //First we need to get the list of pokemons
@@ -96,5 +106,25 @@ class PokemonRemoteImpl{
       debugPrint('Error al obtener movimientos del Pokémon: $e');
       return pokemon;
     }
+  }
+
+  Future<void> savePokemon(Pokemon pokemon)async {
+    await _initDatabase();
+    await PokemonDatabase.insertPokemon(_database!, pokemon);
+  }
+
+  Future<void> deletePokemon(int id) async {
+    await _initDatabase();
+    await PokemonDatabase.deletePokemon(_database!,id);
+  }
+
+  Future<List<Pokemon>> getSavedPokemons() async {
+    await _initDatabase();
+    return await PokemonDatabase.getAllPokemons(_database!);
+  }
+
+  Future<bool> isPokemonFavorite(int id) async {
+    await _initDatabase();
+    return await PokemonDatabase.isPokemonFavorite(_database!,id);
   }
 }

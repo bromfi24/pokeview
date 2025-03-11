@@ -8,13 +8,14 @@ import 'package:pokeview/presentation/common/widget/error/error_overlay.dart';
 import 'package:pokeview/presentation/common/widget/loading/loading_overlay.dart';
 import 'package:pokeview/presentation/common/resources/background_gradient.dart';
 import 'package:pokeview/presentation/common/widget/appbar/search_app_bar.dart';
+import 'package:pokeview/presentation/navigation/navigation_routes.dart';
 import 'package:pokeview/presentation/view/pokemon/pokemon_view.dart';
 import 'package:pokeview/presentation/view/pokemon/viewmodel/pokemon_view_model.dart';
 import 'package:pokeview/presentation/common/resources/responsive.dart'; // Importar la clase Responsive
 
 class ListScreen extends StatefulWidget {
-  const ListScreen({super.key});
-
+  const ListScreen({super.key, required this.isList});
+  final bool isList;
   @override
   State<ListScreen> createState() => _ListScreenState();
 }
@@ -26,6 +27,7 @@ class _ListScreenState extends State<ListScreen> {
   bool searchPressed = false;
   String query = '';
   List<Pokemon> pokemons = [];
+  bool isFavorite = false;
 
   @override
   void initState() {
@@ -54,11 +56,16 @@ class _ListScreenState extends State<ListScreen> {
       }
     });
 
-    _pokemonViewModel.getPokemonsList(NetworkEndpoints.baseUrl);
+    if (widget.isList) {
+      _pokemonViewModel.getPokemonsList(NetworkEndpoints.baseUrl);
+    }
+    else{
+      _pokemonViewModel.getSavedPokemons();
+    }
   }
 
   void _scrollListener() {
-    if ((_scrollController.position.pixels + 500) >= _scrollController.position.maxScrollExtent) {
+    if ((_scrollController.position.pixels + 500) >= _scrollController.position.maxScrollExtent && widget.isList) {
       _pokemonViewModel.getNextPokemonList();
     }
   }
@@ -75,6 +82,11 @@ class _ListScreenState extends State<ListScreen> {
   @override
   Widget build(BuildContext context) {
     final responsive = Responsive.of(context); // Inicializamos la clase Responsive
+    String route = NavigationRoutes.initialRoute;
+
+    if(!widget.isList){
+      route = NavigationRoutes.listRoute;
+    }
 
     return Scaffold(
       appBar: SearchCustomAppBar(
@@ -95,6 +107,7 @@ class _ListScreenState extends State<ListScreen> {
             this.query = query;
           });
         },
+        backRoute: route,
       ),
       body: Stack(
         children: [
@@ -166,7 +179,12 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
       itemBuilder: (context, index) {
         final pokemon = filteredPokemon[index];
         return PokemonView(
-          pokemon: pokemon, // Pasamos el responsive al PokemonView
+          pokemon: pokemon,
+          onDelete: () => {
+            setState(() {
+              totalPokemon.remove(pokemon);
+            })
+          }, // Pasamos el responsive al PokemonView
         );
       },
     );
