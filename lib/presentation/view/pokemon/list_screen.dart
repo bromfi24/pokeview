@@ -11,11 +11,12 @@ import 'package:pokeview/presentation/common/widget/appbar/search_app_bar.dart';
 import 'package:pokeview/presentation/navigation/navigation_routes.dart';
 import 'package:pokeview/presentation/view/pokemon/pokemon_view.dart';
 import 'package:pokeview/presentation/view/pokemon/viewmodel/pokemon_view_model.dart';
-import 'package:pokeview/presentation/common/resources/responsive.dart'; // Importar la clase Responsive
+import 'package:pokeview/presentation/common/resources/responsive.dart';
 
 class ListScreen extends StatefulWidget {
   const ListScreen({super.key, required this.isList});
   final bool isList;
+
   @override
   State<ListScreen> createState() => _ListScreenState();
 }
@@ -23,7 +24,6 @@ class ListScreen extends StatefulWidget {
 class _ListScreenState extends State<ListScreen> {
   final _pokemonViewModel = inject<PokemonViewModel>();
   late ScrollController _scrollController;
-  bool isMounted = false;
   bool searchPressed = false;
   String query = '';
   List<Pokemon> pokemons = [];
@@ -36,19 +36,24 @@ class _ListScreenState extends State<ListScreen> {
     _scrollController.addListener(_scrollListener);
 
     _pokemonViewModel.pokemonListState.stream.listen((state) {
+      if (!mounted) return; // Comprobación de mounted antes de actuar
       switch (state.status) {
         case Status.LOADING:
           LoadingOverlay.show(context, Alignment.center);
           break;
         case Status.SUCCESS:
           LoadingOverlay.hide();
-          setState(() {
-            pokemons = state.data;
-          });
+          if (mounted) { // Comprobación antes de setState
+            setState(() {
+              pokemons = state.data;
+            });
+          }
           break;
         case Status.ERROR:
           LoadingOverlay.hide();
-          ErrorOverlay.of(context).show(state.error);
+          if (mounted) { // Comprobación antes de mostrar error
+            ErrorOverlay.of(context).show(state.error);
+          }
           break;
         default:
           LoadingOverlay.hide();
@@ -58,8 +63,7 @@ class _ListScreenState extends State<ListScreen> {
 
     if (widget.isList) {
       _pokemonViewModel.getPokemonsList(NetworkEndpoints.baseUrl);
-    }
-    else{
+    } else {
       _pokemonViewModel.getSavedPokemons();
     }
   }
@@ -74,17 +78,16 @@ class _ListScreenState extends State<ListScreen> {
   void dispose() {
     _scrollController.removeListener(_scrollListener);
     _scrollController.dispose();
-    isMounted = false;
     LoadingOverlay.hide();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final responsive = Responsive.of(context); // Inicializamos la clase Responsive
+    final responsive = Responsive.of(context);
     String route = NavigationRoutes.initialRoute;
 
-    if(!widget.isList){
+    if (!widget.isList) {
       route = NavigationRoutes.listRoute;
     }
 
@@ -92,20 +95,26 @@ class _ListScreenState extends State<ListScreen> {
       appBar: SearchCustomAppBar(
         title: "Hazte con todos!",
         onPressed: () {
-          setState(() {
-            searchPressed = true;
-          });
+          if (mounted) { // Comprobación antes de setState
+            setState(() {
+              searchPressed = true;
+            });
+          }
         },
         searchPressed: searchPressed,
         callBackButton: () {
-          setState(() {
-            searchPressed = false;
-          });
+          if (mounted) { // Comprobación antes de setState
+            setState(() {
+              searchPressed = false;
+            });
+          }
         },
         callBackSearch: (String query) {
-          setState(() {
-            this.query = query;
-          });
+          if (mounted) { // Comprobación antes de setState
+            setState(() {
+              this.query = query;
+            });
+          }
         },
         backRoute: route,
       ),
@@ -117,7 +126,7 @@ class _ListScreenState extends State<ListScreen> {
               scrollController: _scrollController,
               query: query,
               pokemons: pokemons,
-              responsive: responsive, // Pasamos el responsive
+              responsive: responsive,
             ),
           ),
         ],
@@ -132,12 +141,12 @@ class PokemonVisualizer extends StatefulWidget {
     required this.scrollController,
     required this.query,
     required this.pokemons,
-    required this.responsive, // Pasamos el responsive
+    required this.responsive,
   });
   final ScrollController scrollController;
   final String query;
   final List<Pokemon> pokemons;
-  final Responsive responsive; // Variable responsive
+  final Responsive responsive;
 
   @override
   State<PokemonVisualizer> createState() => _PokemonVisualizerState();
@@ -157,9 +166,11 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
   void didUpdateWidget(PokemonVisualizer oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.pokemons != widget.pokemons) {
-      setState(() {
-        totalPokemon = widget.pokemons;
-      });
+      if (mounted) { // Comprobación antes de setState
+        setState(() {
+          totalPokemon = widget.pokemons;
+        });
+      }
     }
   }
 
@@ -172,7 +183,7 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
         ).toList();
 
     return ListView.builder(
-      padding: EdgeInsets.symmetric(horizontal: widget.responsive.widthPercent(5)), // Ajuste de padding
+      padding: EdgeInsets.symmetric(horizontal: widget.responsive.widthPercent(5)),
       controller: widget.scrollController,
       scrollDirection: Axis.vertical,
       itemCount: filteredPokemon.length,
@@ -180,11 +191,13 @@ class _PokemonVisualizerState extends State<PokemonVisualizer> {
         final pokemon = filteredPokemon[index];
         return PokemonView(
           pokemon: pokemon,
-          onDelete: () => {
-            setState(() {
-              totalPokemon.remove(pokemon);
-            })
-          }, // Pasamos el responsive al PokemonView
+          onDelete: () {
+            if (mounted) { // Comprobación antes de setState
+              setState(() {
+                totalPokemon.remove(pokemon);
+              });
+            }
+          },
         );
       },
     );
