@@ -118,18 +118,20 @@ class _ListScreenState extends State<ListScreen> {
         },
         backRoute: route,
       ),
-      body: Stack(
-        children: [
-          BackgroundGradient(
-            colorsList: Constants.colorsListScreen,
-            child: PokemonVisualizer(
-              scrollController: _scrollController,
-              query: query,
-              pokemons: pokemons,
-              responsive: responsive,
+      body: SafeArea(
+        child: Stack(
+          children: [
+            BackgroundGradient(
+              colorsList: Constants.colorsListScreen,
+              child: PokemonVisualizer(
+                scrollController: _scrollController,
+                query: query,
+                pokemons: pokemons,
+                responsive: responsive,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -76,11 +76,6 @@ class _SearchCustomAppBarState extends State<SearchCustomAppBar> {
             ),
       actions: [
         IconButton(
-          icon: const Icon(Icons.favorite_border),
-          onPressed:(() => context.go(NavigationRoutes.favoriteRoute)),
-          color: Colors.black,
-        ),
-        IconButton(
           icon: const Icon(Icons.search),
           onPressed: widget.onPressed,
           color: Colors.black,

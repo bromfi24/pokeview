@@ -31,6 +31,7 @@ flutter:
   assets:
     - assets/fonts/
     - assets/images/
+    - assets/images/starters_gen_1/
     - assets/images/pokemon_types/
   fonts:
     - family: PokemonFont
