@@ -40,10 +40,7 @@ class PokemonRemoteImpl{
     previous = listResponse.previous ?? '';
 
     //Then we need to get the details of each pokemon
-
-
-
-    print('List of pokemons: ${listResponse.results}');
+    debugPrint('List of pokemons: ${listResponse.results}');
 
     List<Future<Pokemon>> futures = listResponse.results.map((result) => getPokemon(result.url)).toList();
     List<Pokemon> newPokemons = await Future.wait(futures);
@@ -65,6 +62,7 @@ class PokemonRemoteImpl{
     final response = await _httpClient.dio.get(url);
     final pokemonResponse = PokemonResponse.fromJson(response.data);
     Pokemon resul = PokemonMapper.pokemonDBToEntity(pokemonResponse);
+    debugPrint('Pokemon: ${resul.imagesUrl}');
     return Future.value(resul);
   }
 
