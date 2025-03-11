@@ -86,17 +86,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> with TickerProviderStateM
                 children: [
                   Transform.translate(
                     offset: Offset(0, _pokemonAnimation.value),
-                    child: Image.asset('assets/images/bulbasaur.png', width: responsive.widthPercent(20)),
+                    child: Image.asset('assets/images/starters_gen_1/starter_1.png', width: responsive.widthPercent(20)),
                   ),
                   SizedBox(width: responsive.widthPercent(5)),
                   Transform.translate(
                     offset: Offset(0, -_pokemonAnimation.value),
-                    child: Image.asset('assets/images/charmander.png', width: responsive.widthPercent(20)),
+                    child: Image.asset('assets/images/starters_gen_1/starter_2.png', width: responsive.widthPercent(20)),
                   ),
                   SizedBox(width: responsive.widthPercent(5)),
                   Transform.translate(
                     offset: Offset(0, _pokemonAnimation.value),
-                    child: Image.asset('assets/images/squirtle.png', width: responsive.widthPercent(20)),
+                    child: Image.asset('assets/images/starters_gen_1/starter_3.png', width: responsive.widthPercent(20)),
                   ),
                 ],
               );
